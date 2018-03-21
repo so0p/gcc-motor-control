@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+</head>
+<header>
+	<h1 class="wilbur">Wilbur's Control Center</h1>
+</header>
+<body>
+	<form method="POST" action="">
+		Duration: 
+		<input type="number" name="duration" min="0" max="10">
+		<input type="submit">
+		
+		<label for="arm">Arm</label>
+    		<select id="motors" name="motors">
+    			<option value=""></option>
+      			<option value="motor1">Motor 1</option>
+      			<option value="motor2">Motor 2</option>
+      			<option value="motor3">Motor 3</option>
+      			<option value="motor4">Motor 4</option>
+      			<option value="motor5">Motor 5</option>
+      			<option value="motor6">Motor 6</option>
+    		</select>
+
+    	<label for="roverdirection">Rover Direction</label>
+    		<select id="direction" name="direction">
+    			<option value=""></option>
+      			<option value="forward">Forward</option>
+      			<option value="backward">Backward</option>
+      			<option value="left">Left</option>
+      			<option value="right">Right</option>
+    		</select>
+	</form>
+
+	<table>
+		<tr>
+		<th></th>
+		<th>ROVER</th>
+		<th>ARM</th>
+		</tr>
+		<tr>
+			<td>Time Stamp</td>
+			<td>{{ rover_time }} </td>
+			<td>{{ arm_time }}</td>
+		</tr>
+		<tr>
+			<td>Mode</td>
+			<td>{{ rover_mode }}</td>
+			<td>{{ arm_mode }}</td>
+		</tr>
+		<tr>
+			<td>Joystick Control</td>
+			<td>{{ rover_control }}</td>
+			<td>{{ arm_control }}</td>
+		</tr>
+		<tr>
+			<td>Danger Status</td>
+			<td>{{ rover_status }}</td>
+			<td>{{ arm_status }}</td>
+		</tr>
+		<tr>
+			<td>Motor Current</td>
+			<td>{{ rover_current }}</td>
+			<td>{{ arm_current }}</td>
+		</tr>
+		<tr>
+			<td>Motor Voltage</td>
+			<td>{{ rover_voltage }}</td>
+			<td>{{ arm_voltage }}</td>
+		</tr>
+		<tr>
+			<td>Current Speed</td>
+			<td>{{ rover_curr_speed }}</td>
+			<td>{{ arm_curr_speed }}</td>
+		</tr>
+		<tr>
+			<td>Goal Speed</td>
+			<td>{{ rover_goal_speed }}</td>
+			<td>{{ arm_goal_speed }}</td>
+		</tr>
+		<tr>
+			<td>Encoder Speed</td>
+			<td>{{ rover_encoder_spd }}</td>
+			<td>{{ arm_encoder_spd }}</td>
+		</tr>
+		<tr>
+			<td>Battery Voltage</td>
+			<td>{{ rover_batt_voltage }}</td>
+			<td>{{ arm_batt_voltage }}</td>
+		</tr>
+		<tr>
+			<td>Battery Current</td>
+			<td>{{ rover_batt_current }}</td>
+			<td>{{ arm_batt_current }}</td>
+		</tr>
+	</table>
+</body>
+</html>
