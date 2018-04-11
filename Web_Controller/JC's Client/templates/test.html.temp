@@ -20,6 +20,8 @@
 	</form>
 
 </html>
+<!---
 {% if roverDirection is not none %}
 	{{ roverDirection }}
 {% endif % }
+--->
