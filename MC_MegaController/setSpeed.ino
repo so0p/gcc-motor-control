@@ -17,25 +17,67 @@ void setSpeed(){
   int goal_ramp = param[drive_mode].ramp;
 
   if(dangerFront || dangerBack) { 
-    rover_goal_spd_lt = 0;
-    rover_goal_spd_rt = 0;
+    //rover_goal_spd_lt = 0;
+    //rover_goal_spd_rt = 0;
     rover_cur_spd_lt = 0;
     rover_cur_spd_rt = 0;
-    
-    arm_goal_spd_m1 = 0;
-    arm_goal_spd_m2 = 0;
-    arm_goal_spd_m3 = 0;
-    arm_goal_spd_m4 = 0; 
-    arm_goal_spd_m5 = 0;
-    arm_goal_spd_m6 = 0;
 
-    arm_cur_spd_m1 = 0;
-    arm_cur_spd_m2 = 0;
-    arm_cur_spd_m3 = 0;
-    arm_cur_spd_m4 = 0;
-    arm_cur_spd_m5 = 0;
-    arm_cur_spd_m6 = 0;
+    if (dangerBack){
+      if(  (rover_goal_spd_lt > 0 )) {  
+          if(rover_cur_spd_lt < rover_goal_spd_lt) {
+            rover_cur_spd_lt += goal_ramp;
+          }
+          else {
+            rover_cur_spd_lt -= goal_ramp;
+          }
+        }
+
+        if(  (rover_goal_spd_rt > 0 )) { 
+          if(rover_cur_spd_rt < rover_goal_spd_rt) {
+            rover_cur_spd_rt += goal_ramp;
+          }
+          else {
+            rover_cur_spd_rt -= goal_ramp;
+          }      
+        }
+    }
+
+    if (dangerFront){
+      if( (rover_goal_spd_lt < 0 )) {  
+          if(rover_cur_spd_lt < rover_goal_spd_lt) {
+            rover_cur_spd_lt += goal_ramp;
+          }
+          else {
+            rover_cur_spd_lt -= goal_ramp;
+          }
+        }
+
+        if(  (rover_goal_spd_rt < 0 )) { 
+          if(rover_cur_spd_rt < rover_goal_spd_rt) {
+            rover_cur_spd_rt += goal_ramp;
+          }
+          else {
+            rover_cur_spd_rt -= goal_ramp;
+          }      
+        }
+    }
+
+//    arm_goal_spd_m1 = 0;
+//    arm_goal_spd_m2 = 0;
+//    arm_goal_spd_m3 = 0;
+//    arm_goal_spd_m4 = 0; 
+//    arm_goal_spd_m5 = 0;
+//    arm_goal_spd_m6 = 0;
+
+//    arm_cur_spd_m1 = 0;
+//    arm_cur_spd_m2 = 0;
+//    arm_cur_spd_m3 = 0;
+//    arm_cur_spd_m4 = 0;
+//    arm_cur_spd_m5 = 0;
+//    arm_cur_spd_m6 = 0;
   }
+  
+  
 
   else {
     //************************Joystick *******************************
