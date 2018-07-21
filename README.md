@@ -1,6 +1,8 @@
 Glendale Community College Robotics: Motor Controller Software
 =====
 
+Motor Controller built on Arduino
+
 ## Hardware Contained on Life of the Party Rover
 * [RoboClaw Motor Controller](https://www.amazon.com/Orion-Robotics-R0413-RoboClaw-Controller/dp/B00R1LFTZ2?ie=UTF8&*Version*=1&*entries*=0) 
 * [tm1638 LED display module](https://www.amazon.com/tm1638-display-module-digital-arduino/dp/b00w4j5tpg)
