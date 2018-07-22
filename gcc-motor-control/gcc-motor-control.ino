@@ -21,13 +21,13 @@ Hardware Hookup:
 // **************************************************************
 
 //Includes required to use Roboclaw library
-#include "RoboClaw.h"
+#include "../lib/roboclaw_2/RoboClaw.h"
 
 // We'll use SoftwareSerial to communicate with the XBee:
 #include <SoftwareSerial.h>
 
 // for TM1638 display unit
-#include "TM1638.h"
+#include "../lib/roboclaw_2/TM1638.h"
 
 //#define cmdDelay 150
 
