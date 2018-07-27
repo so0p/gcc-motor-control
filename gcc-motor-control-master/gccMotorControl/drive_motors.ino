@@ -11,22 +11,22 @@ void driveMotors() {
       if(rover_cur_spd_lt != 0 || rover_cur_spd_rt != 0) {
         roboclaw1.SpeedM1(address,rover_cur_spd_lt);  
         roboclaw1.SpeedM2(address,rover_cur_spd_lt);
-        roboclaw2.SpeedM1(address,rover_cur_spd_rt);
-        roboclaw2.SpeedM2(address,rover_cur_spd_rt); 
+        //roboclaw2.SpeedM1(address,rover_cur_spd_rt);
+        //roboclaw2.SpeedM2(address,rover_cur_spd_rt); 
       }
 
       else if(hillMode) {
         roboclaw1.SpeedM1(address,0);
         roboclaw1.SpeedM2(address,0);
-        roboclaw2.SpeedM1(address,0);
-        roboclaw2.SpeedM2(address,0);      
+        //roboclaw2.SpeedM1(address,0);
+        //roboclaw2.SpeedM2(address,0);      
         // drive to velocity 0
       }
       else if(!hillMode) {
         roboclaw1.BackwardM1(address,0); //Stop Motor1 
         roboclaw1.BackwardM2(address,0); //Stop Motor2 
-        roboclaw2.BackwardM1(address,0); //Stop Motor1 
-        roboclaw2.BackwardM2(address,0); //Stop Motor2      
+        //roboclaw2.BackwardM1(address,0); //Stop Motor1 
+        //roboclaw2.BackwardM2(address,0); //Stop Motor2      
         // don't drive the motors anymore... 
       }
     } // if everything is OK
@@ -34,8 +34,8 @@ void driveMotors() {
     else if(!batteryOK) {
       roboclaw1.BackwardM1(address,0); //Stop Motor1 
       roboclaw1.BackwardM2(address,0); //Stop Motor2 
-      roboclaw2.BackwardM1(address,0); //Stop Motor1 
-      roboclaw2.BackwardM2(address,0); //Stop Motor2      
+      //roboclaw2.BackwardM1(address,0); //Stop Motor1 
+      //roboclaw2.BackwardM2(address,0); //Stop Motor2      
     }
   } // drive_motors(0)
 //  else if (mode==MODE_ARM) {
@@ -61,7 +61,7 @@ void get_roboclaw_status() {
   bool rc2_alive = false;  
 
   mc1_batt = roboclaw1.ReadMainBatteryVoltage(address, &rc1_alive);
-  mc2_batt = roboclaw2.ReadMainBatteryVoltage(address, &rc2_alive);  
+  //mc2_batt = roboclaw2.ReadMainBatteryVoltage(address, &rc2_alive);  
 
   // if battery level gets low, completely stop driving
   if(mc1_batt<227 || mc2_batt<226) {

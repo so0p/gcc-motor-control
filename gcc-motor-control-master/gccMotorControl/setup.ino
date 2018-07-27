@@ -7,11 +7,13 @@ void setup() {
 
   //For Thing on Web Control
   Serial1.begin(115200);
+  Serial2.begin(115200);
+  Serial3.begin(115200);
 
 
   //Open roboclaw serial ports
   roboclaw1.begin(38400);
-  roboclaw2.begin(38400);
+  //roboclaw2.begin(38400);
 
   jscmd.linkActive = true; // override this value until we check for it
   jscmd.up = false;
