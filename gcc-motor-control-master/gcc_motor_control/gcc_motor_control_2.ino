@@ -1,5 +1,5 @@
 void loop() {
-    
+  
   // get current time in millis
   unsigned long cur_time = millis();
 
@@ -10,7 +10,6 @@ void loop() {
 
     //may not need since included in get joystick
     // Check if joystick is on
-    
 
     //Checking before loop
 //    Serial.print("Before the motors - ");

@@ -38,7 +38,10 @@ Hardware Hookup:
 // **   Prototypes
 // *******************************
 
-void getJoystick(void);
+void driveMotors(void);
+void get_roboclaw_status(void);
+
+void getJoystick();
 void show_joystick_inputs(void);
 
 void getThing(void);
