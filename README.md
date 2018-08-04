@@ -36,4 +36,6 @@ Contains:
 * setup.ino
 * tm1638.ino
 
+Installation Guide
+For OSX move lib folders into ~/Documents/Arduino/libraries. For Windows, My Documents\Arduino\libraries\
 ###### Documentation Written by [Charlson So](github.com/so0p)
