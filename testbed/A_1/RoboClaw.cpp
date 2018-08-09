@@ -1048,3 +1048,4 @@ bool RoboClaw::GetPWMMode(uint8_t address, uint8_t &mode){
 	}
 	return valid;
 }
+

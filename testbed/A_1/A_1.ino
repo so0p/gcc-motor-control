@@ -15,19 +15,18 @@ Hardware Hookup:
 
 *****************************************************************/
 
-
 // **************************************************************
 //     LIBRARIES
 // **************************************************************
-
-#include "GlobalData.h"
-#include "JoystickSuite.h"
 
 //Includes required to use Roboclaw library
 #include "RoboClaw.h"
 
 // We'll use SoftwareSerial to communicate with the XBee:
-//#include <SoftwareSerial.h>
+#include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
+
+//#include "GlobalData.h" // used to generate instances of global variables
+#include "JoystickSuite.h" // incorporates several functions into a single structure
 
 // for TM1638 display unit
 #include "TM1638.h"
@@ -41,10 +40,11 @@ Hardware Hookup:
 // **   Prototypes
 // *******************************
 
-void driveMotors(void);
-void get_roboclaw_status(void);
+//TEMP void driveMotors(void);
+//TEMP void get_roboclaw_status(void);
 
-/*void getJoystick(GlobalData& data, SoftwareSerial& xbeeData);
+/* <--- JoystickSuite.h
+void getJoystick(GlobalData& data, SoftwareSerial& xbeeData);
 void show_joystick_inputs(GlobalData& data);
 void set_goal_speed(GlobalData& data, SoftwareSerial& xbeeData);
 void parse_xbee_byte(SoftwareSerial& xbeeData);*/
@@ -61,7 +61,8 @@ void refresh_tm1638(void);
 // **   GlobalData 
 // *******************************
 
-GlobalData global_vars;
+//GlobalData global_vars;
+JoystickSuite Joystick_1(11,10);
 
 /*// *******************************
 // **   Parameters 
@@ -99,19 +100,24 @@ GlobalData global_vars;
 
 #define LOOP_PERIOD_MS 20   // 50Hz Loop*/
 
-// ***********************
+/*// ***********************
 //       XBEE
 // ***********************
 // XBee's DOUT (TX) is connected to pin 2 (Arduino's Software RX)
 // XBee's DIN (RX) is connected to pin 3 (Arduino's Software TX)
 // on xbee shield, place jumper on XB_TX_11 and DIGITAL, and
 // XB_RX_10 and DIGITAL
-SoftwareSerial XBee(11, 10); // RX, TX (this is confusing and wrong, probably!)
-/*bool xbee_on = false;
+SoftwareSerial XBee(11, 10); // RX, TX (this is confusing and wrong, probably!)*/
+
+/* ---> GlobalData.h
+
+bool xbee_on = false;
 int xbee_counter = 0;
 long lastTimeJSMessageRecieved;*/
 
-/*struct JOYSTICK_CMD {
+/* ---> GlobalData.h
+  
+  struct JOYSTICK_CMD {
   bool linkActive;      // is the JS link active?
   bool up, dn, lt, rt;  // Up, Down, Left, Right
   bool r1, r2, l1, l2;  // Right1, Right2, Left1, Left2
@@ -120,7 +126,9 @@ long lastTimeJSMessageRecieved;*/
   // TODO: add analogs
 };*/
 
-/*// ***********************
+/* ---> GlobalData.h
+
+// ***********************
 //       Thing
 // ***********************
 bool thing_on =false;
@@ -277,3 +285,4 @@ uint8_t currentM3;
 uint8_t currentM4;
 uint8_t currentM5;
 uint8_t currentM6;
+

@@ -133,3 +133,4 @@ void TM1638::sendChar(byte pos, byte data, boolean dot)
 {
 	sendData(pos << 1, data | (dot ? 0b10000000 : 0));
 }
+

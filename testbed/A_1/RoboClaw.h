@@ -7,7 +7,7 @@
 #include <Stream.h>
 #include <HardwareSerial.h>
 #ifdef __AVR__
-#include <SoftwareSerial.h>
+       #include <SoftwareSerial.h>
 #endif
 
 /******************************************************************************
@@ -252,3 +252,4 @@ private:
 };
 
 #endif
+

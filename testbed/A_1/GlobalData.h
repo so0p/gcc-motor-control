@@ -1,4 +1,4 @@
-#ifndef GlobalData_h
+/*#ifndef GlobalData_h
 #define GlobalData_h
 
 class GlobalData{
@@ -53,13 +53,13 @@ public:
   byte drive_mode ; //= SLOW;    // indicates which driving profile is currently used
   bool hillMode ; //= true;      // maintain velocity of 0 (ie: brake if not driving)
   
-  //DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters
+  //DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters <--- OBSOLETE
   
   unsigned long last_loop_time ; //= 0;
-  //JOYSTICK_CMD jscmd;                  // current joystick command
-  unsigned long jscmd_cnt ; //= 0;         // count of commands from joystick
+  //JOYSTICK_CMD jscmd;                  // current joystick command <--- OBSOLETE
+  unsigned long joystick_command_count ; //= 0;         // count of commands from joystick
   
-  //COMMAND_FROM_THING_TO_MC CMDS_TO_MC;
+  //COMMAND_FROM_THING_TO_MC CMDS_TO_MC; <--- OBSOLETE
   
   // current and goal speeds for each side
   
@@ -184,4 +184,5 @@ public:
   int BUTTON_PIN_BACK_R ; //= 47;
   int BUTTON_PIN_BACK_L ; //= 45;
 };
-#endif // GlobalData_h
+#endif // GlobalData_h*/
+

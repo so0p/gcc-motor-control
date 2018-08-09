@@ -3,10 +3,10 @@ void loop() {
   // get current time in millis
   unsigned long cur_time = millis();
 
-  if( (cur_time - global_vars.last_loop_time) >  LOOP_PERIOD_MS) {
-    global_vars.last_loop_time = cur_time;
-    //    Serial.print("loop time ");
-    //    Serial.println(cur_time, DEC);
+  if( (cur_time - Joystick_1.last_loop_time) >  LOOP_PERIOD_MS) {
+    Joystick_1.last_loop_time=cur_time;
+        Serial.print("loop time ");
+        Serial.println(cur_time, DEC);
 
     //may not need since included in get joystick
     // Check if joystick is on
@@ -19,7 +19,8 @@ void loop() {
 //    Serial.println(rover_cur_spd_rt, DEC);
     
     // Get JoyStick Commands
-    getJoystick(global_vars, XBee);
+    Joystick_1.getJoystick();
+    Serial.println("getJoystick done");
 //    Serial.print("After get joystick - ");
 //    Serial.print("    curL: ");
 //    Serial.print(rover_cur_spd_lt, DEC);
@@ -40,10 +41,6 @@ void loop() {
     //***********
     // Detects Bumper Collisions and Checks Currents
     getDanger();
-
-
-
-
 
     // TODO: process commands from future serial input
     // TBD....
@@ -103,3 +100,4 @@ void loop() {
   }
   
 } // loop()
+

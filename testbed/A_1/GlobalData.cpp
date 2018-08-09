@@ -1,4 +1,4 @@
-#include "Arduino.h"
+/*#include "Arduino.h"
 #include "GlobalData.h"
 
 GlobalData::GlobalData (){
@@ -17,17 +17,17 @@ GlobalData::GlobalData (){
   
   unsigned long last_loop_time = 0;
   //JOYSTICK_CMD jscmd;                  // current joystick command
-  unsigned long jscmd_cnt = 0;         // count of commands from joystick
+  unsigned long joystick_command_count = 0;         // count of commands from joystick
   
   //COMMAND_FROM_THING_TO_MC CMDS_TO_MC;
   
   // current and goal speeds for each side
   
   
-  int rover_cur_spd_lt  = 0;                 // current left motor speed for Rover
-  int rover_cur_spd_rt  = 0;                 // current right motor speed for Rover
-  int rover_goal_spd_lt = 0;                 // left motor goal speed for Rover
-  int rover_goal_spd_rt = 0;                 // right motor goal speed for Rover 
+  int rover_cur_spd_lt  = 0;               // current left motor speed for Rover
+  int rover_cur_spd_rt  = 0;               // current right motor speed for Rover
+  int rover_goal_spd_lt = 0;               // left motor goal speed for Rover
+  int rover_goal_spd_rt = 0;               // right motor goal speed for Rover 
   int arm_cur_spd_m1  = 0;                 // current motor1 speed for Arm
   int arm_cur_spd_m2  = 0;                 // current motor2 speed for Arm
   int arm_cur_spd_m3  = 0;                 // current motor3 speed for Arm
@@ -109,5 +109,6 @@ GlobalData::GlobalData (){
   int BUTTON_PIN_FRONT_L = 41;
   int BUTTON_PIN_BACK_R = 47;
   int BUTTON_PIN_BACK_L = 45;
-}
+}*/
+
 
