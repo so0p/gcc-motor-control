@@ -4,6 +4,7 @@ void setup() {
   // for the XBee. Make sure the baud rate matches the config
   // setting of your XBee.
   XBee.begin(9600);*/
+  
   Serial.begin(57600);
   Serial.println("SETUP START"); //DEBUG MSG
 
@@ -58,11 +59,9 @@ void setup() {
 
   pinMode(BIGLIGHT_PIN, OUTPUT);
   
-  /* <--- JoystickSuite.h
   // flush XBee serial stream before we get into loop()
-  XBee.flush();*/
   Joystick_1.serialPtr->flush();
-
+  
   /* <--- JoystickSuite.h
   //set the counter to 0
   Joystick_1.xbee_counter=0;*/

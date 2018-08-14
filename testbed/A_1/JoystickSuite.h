@@ -1,23 +1,25 @@
 #ifndef JoystickSuite_h
 #define JoystickSuite_h
 #include <SoftwareSerial.h>
+class DangerSuite;
+//#include "DangerSuite.h"
 
 class JoystickSuite{
   public:
 
-  //********************************
-  //     Constructors and Function Prototypes
-  //********************************
+  //*************************************
+  //     Constructors and Member Function
+  //*************************************
   
-  JoystickSuite(int rx,int tx);
+  JoystickSuite(int rx,int tx); // User provides desired data-pins for SoftwareSerial object to use
   
-  void getJoystick();
+  void getJoystick(DangerSuite& danger);
   void show_joystick_inputs();
   void set_goal_speed();
   void parse_xbee_byte();
     
   // *******************************
-  //    Constant Parameter Definitions
+  // Constant Parameter Definitions
   // *******************************
   
   // MODE SECTION
@@ -60,46 +62,42 @@ class JoystickSuite{
   //HardCode the Mode of Rover
   int mode ; //= MODE_ROVER;
   
-  byte drive_mode ; //= SLOW;    // indicates which driving profile is currently used
-  bool hillMode ; //= true;      // maintain velocity of 0 (ie: brake if not driving)
+  byte drive_mode ; // indicates which driving profile is currently used
+  bool hillMode ; // maintain velocity of 0 (ie: brake if not driving)
   
-  //DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters <--- OBSOLETE
+  unsigned long last_loop_time ;
   
-  unsigned long last_loop_time ; //= 0;
-  //JOYSTICK_CMD jscmd;                  // current joystick command <--- OBSOLETE
-  unsigned long joystick_command_count ; //= 0;         // count of commands from joystick
-  
-  //COMMAND_FROM_THING_TO_MC CMDS_TO_MC; <--- OBSOLETE
+  unsigned long joystick_command_count ;         // count of commands from joystick
   
   // current and goal speeds for each side
   
   
-  int rover_cur_spd_lt  ; //= 0;                 // current left motor speed for Rover
-  int rover_cur_spd_rt  ; //= 0;                 // current right motor speed for Rover
-  int rover_goal_spd_lt ; //= 0;                 // left motor goal speed for Rover
-  int rover_goal_spd_rt ; //= 0;                 // right motor goal speed for Rover 
-  int arm_cur_spd_m1  ; //= 0;                 // current motor1 speed for Arm
-  int arm_cur_spd_m2  ; //= 0;                 // current motor2 speed for Arm
-  int arm_cur_spd_m3  ; //= 0;                 // current motor3 speed for Arm
-  int arm_cur_spd_m4  ; //= 0;                 // current motor4 speed for Arm
-  int arm_cur_spd_m5  ; //= 0;                 // current motor5 speed for Arm
-  int arm_cur_spd_m6  ; //= 0;                 // current motor6 speed for Arm
-  int arm_goal_spd_m1 ; //= 0;                 // motor1 goal speed for Arm
-  int arm_goal_spd_m2 ; //= 0;                 // motor2 goal speed for Arm
-  int arm_goal_spd_m3 ; //= 0;                 // motor3 goal speed for Arm
-  int arm_goal_spd_m4 ; //= 0;                 // motor4 goal speed for Arm
-  int arm_goal_spd_m5 ; //= 0;                 // motor5 goal speed for Arm
-  int arm_goal_spd_m6 ; //= 0;                 // motor6 goal speed for Arm
+  int rover_cur_spd_lt  ;                 // current left motor speed for Rover
+  int rover_cur_spd_rt  ;                 // current right motor speed for Rover
+  int rover_goal_spd_lt ;                 // left motor goal speed for Rover
+  int rover_goal_spd_rt ;                 // right motor goal speed for Rover 
+  int arm_cur_spd_m1  ;                 // current motor1 speed for Arm
+  int arm_cur_spd_m2  ;                 // current motor2 speed for Arm
+  int arm_cur_spd_m3  ;                 // current motor3 speed for Arm
+  int arm_cur_spd_m4  ;                 // current motor4 speed for Arm
+  int arm_cur_spd_m5  ;                 // current motor5 speed for Arm
+  int arm_cur_spd_m6  ;                 // current motor6 speed for Arm
+  int arm_goal_spd_m1 ;                 // motor1 goal speed for Arm
+  int arm_goal_spd_m2 ;                 // motor2 goal speed for Arm
+  int arm_goal_spd_m3 ;                 // motor3 goal speed for Arm
+  int arm_goal_spd_m4 ;                 // motor4 goal speed for Arm
+  int arm_goal_spd_m5 ;                 // motor5 goal speed for Arm
+  int arm_goal_spd_m6 ;                 // motor6 goal speed for Arm
   
-  byte tm1638_keys  ; //= 0;               // push button inputs from TM1638
+  byte tm1638_keys  ;               // push button inputs from TM1638
   
-  bool eStop ; //= false;                  // emergency stop flag
+  bool eStop ;                  // emergency stop flag
   
-  unsigned int mc1_batt ; //= 250; //0;
+  /*unsigned int mc1_batt ; //= 250; //0; <-- Moved to MotorSuite.h
   unsigned int mc2_batt ; //= 250; //0;
   unsigned int mc3_batt ; //= 250; //Checking battery for MC3, specifically needed for the arm
   
-  bool batteryOK ; //= true;               // battery status is OK flag
+  bool batteryOK ; //= true;               // battery status is OK flag*/
   
   // delete if not being used....
   //bool megaSpeed ; //= 0;
@@ -111,12 +109,12 @@ class JoystickSuite{
   
   SoftwareSerial *serialPtr; // Ptr for acccessing members of the SoftwareSerial object
   
-  bool xbee_on ; //= false;
-  int xbee_counter ; //= 0;
+  bool xbee_on ; // getJoystick checks this value, it should be passed to getThing which checks it too
+  int xbee_counter ; //
   long lastTimeJSMessageRecieved;
 
   // ***********************
-  //       Joystick Command Variables
+  // Joystick Command Struct
   // ***********************
 
   bool linkActive;      // is the JS link active?
@@ -126,18 +124,23 @@ class JoystickSuite{
   bool st, se;          // Start, Select
   // TODO: add analogs
 
-  // ***********************
-  //       Thing Variables
+  /*// *********************
+  // Thing Struct           <--- ThingSuite.h
   // ***********************
   
-  bool thing_on =false;
-  int direction;
-  int motorNum;
-  int duration;
-  long lastTimeThingMessageRecieved;
+  bool thing_on =false; // getThing checks this value
+  int direction; //  accessed by setThingSpeed & checked by getThing
+  int motorNum; // accessed by getThing
+  int duration;*/ 
+  
+  // ***********************
+  // Thing Variables        
+  // ***********************
+  
+  //long lastTimeThingMessageRecieved; // used in getJoystick()
   
   // ************************
-  //        Drive Parameters
+  // Drive Parameter Struct
   // ************************
   
   typedef struct {
@@ -149,51 +152,52 @@ class JoystickSuite{
 
   DRIVE_PARAMS drive_parameters[ROVER_SPEED_SETTINGS];  // LUT for driving parameters, this is an array containing instances of the struct
   
-  // ************************
-  //    DANGER
+  /*// ************************
+  // DANGER                    <-- Moved to DangerSuite.h
   // ************************
   
-  bool dangerOverride ; //= false;                        // Danger Override
-  int dangerCounter ; //= 0;
-  bool dangerFront ; //= false;                           // Rover Danger Variables
-  bool dangerBack ; //= false;                            // Rover Danger Variables
-  bool FrontRight ; //= false;
-  bool FrontLeft ; //= false;
-  bool BackRight ; //= false;
-  bool BackLeft ; //= false;
+  bool dangerOverride ; //                        // Danger Override
+  int dangerCounter ; //
+  bool dangerFront ; //                           // Rover Danger Variables
+  bool dangerBack ; //                            // Rover Danger Variables
+  bool FrontRight ; //
+  bool FrontLeft ; //
+  bool BackRight ; //
+  bool BackLeft ; //
   
-  int buttonStateFront_R ; //= 0;
-  int buttonStateFront_L ; //= 0;
-  int buttonStateBack_R ; //= 0;
-  int buttonStateBack_L ; //= 0;
+  int buttonStateFront_R ; //
+  int buttonStateFront_L ; //
+  int buttonStateBack_R ; //
+  int buttonStateBack_L ; //
   
   // Arm Danger Variables
   
-  bool dangerM1 ; //= false;
-  bool dangerM2 ; //= false;
-  bool dangerM3 ; //= false;
-  bool dangerM4 ; //= false;
-  bool dangerM5 ; //= false;
-  bool dangerM6 ; //= false;   
+  bool dangerM1 ; //
+  bool dangerM2 ; //
+  bool dangerM3 ; //
+  bool dangerM4 ; //
+  bool dangerM5 ; //
+  bool dangerM6 ; //   
   
   // Arm Motor Current Theshold
   
-  int M1_thresh ; //= 1;
-  int M2_thresh ; //= 2;
-  int M3_thresh ; //= 3;
-  int M4_thresh ; //= 4;
-  int M5_thresh ; //= 5;
-  int M6_thresh ; //= 6;              // undertermined values; requires testing
+  int M1_thresh ; //
+  int M2_thresh ; //
+  int M3_thresh ; //
+  int M4_thresh ; //
+  int M5_thresh ; //
+  int M6_thresh ; //              undertermined values; requires testing
   
-  // Pin Locations for Rover
-  int BUTTON_PIN_FRONT_R ; //= 43;  
-  int BUTTON_PIN_FRONT_L ; //= 41;
-  int BUTTON_PIN_BACK_R ; //= 47;
-  int BUTTON_PIN_BACK_L ; //= 45;
+  // Pin Locations for Rover <-- Moved to DangerSuite.h
+  int BUTTON_PIN_FRONT_R ; // 
+  int BUTTON_PIN_FRONT_L ; //
+  int BUTTON_PIN_BACK_R ; //
+  int BUTTON_PIN_BACK_L ; //*/
 
   private:
 
-  SoftwareSerial XBee; // RX, TX (this is confusing and wrong, probably!)
+  SoftwareSerial XBee; // used for the the xbee controller, data pins are submitted by the user using joystickSuite constructor
+  
 };
-#endif // JoystickSuite_h
+#endif // JOYSTICKSUITE_H
 

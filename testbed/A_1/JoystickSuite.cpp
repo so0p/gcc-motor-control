@@ -1,12 +1,13 @@
 #include "Arduino.h"
 #include "JoystickSuite.h"
+#include "DangerSuite.h"
 
+// rx, tx needed because 4 serial ports already in use, SoftwareSerial object turns two pins into data pins
+JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){ 
 
-JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
-
-  // ***********************
-  //       XBEE
-  // ***********************
+  // *****************************
+  // Software Serial Object (XBee)
+  // *****************************
 
   // XBee's DOUT (TX) is connected to pin 2 (Arduino's Software RX)
   // XBee's DIN (RX) is connected to pin 3 (Arduino's Software TX)
@@ -26,7 +27,7 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   long lastTimeJSMessageRecieved;
 
   // ************************
-  //      GLOBAL VARIABLES
+  // GLOBAL VARIABLES
   // ************************
   
   //HardCode the Mode of Rover
@@ -35,10 +36,9 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   byte drive_mode = SLOW;    // indicates which driving profile is currently used
   bool hillMode = true;      // maintain velocity of 0 (ie: brake if not driving)
   
-  //DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters
   
   unsigned long last_loop_time = 0;
-  //JOYSTICK_CMD jscmd;                  // current joystick command
+
   unsigned long joystick_command_count = 0;         // count of commands from joystick
   
   //COMMAND_FROM_THING_TO_MC CMDS_TO_MC;
@@ -65,15 +65,15 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   
   bool eStop = false;                  // emergency stop flag
   
-  unsigned int mc1_batt = 250; //0;
+  /*unsigned int mc1_batt = 250; //0; <-- Moved to MotorSuite.h
   unsigned int mc2_batt = 250; //0;
   unsigned int mc3_batt = 250; //Checking battery for MC3, specifically needed for the arm
   
-  bool batteryOK = true;               // battery status is OK flag
+  bool batteryOK = true;               // battery status is OK flag*/
   
   // delete if not being used....
-  //bool megaSpeed = 0;
-  //int velocity = FAST_VELOCITY;
+  // bool megaSpeed = 0;
+  // int velocity = FAST_VELOCITY;
 
   // ***********************
   //       Joystick Commmand Variables
@@ -108,8 +108,8 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   drive_parameters[ARM].ramp       = ARM_RAMP_RATE;
   drive_parameters[ARM].thr        = ARM_THR;
   
-  // ************************
-  //    DANGER
+  /*// ************************
+  //    DANGER                //WHERE IS THIS USED? <-- Moved to DangerSuite.h
   // ************************
   
   bool dangerOverride = false;                        // Danger Override
@@ -148,28 +148,28 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   int BUTTON_PIN_FRONT_R = 43;  
   int BUTTON_PIN_FRONT_L = 41;
   int BUTTON_PIN_BACK_R = 47;
-  int BUTTON_PIN_BACK_L = 45;
+  int BUTTON_PIN_BACK_L = 45;*/
 
   // ************************
   //    Setup
   // ************************
   
-  //Initalizing Bumper Pins
+  /*//Initalizing Bumper Pins <-- Moved to DangerSuite()
   pinMode(BUTTON_PIN_FRONT_R, INPUT_PULLUP);
   pinMode(BUTTON_PIN_FRONT_L, INPUT_PULLUP);
   pinMode(BUTTON_PIN_BACK_R, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_BACK_L, INPUT_PULLUP);
+  pinMode(BUTTON_PIN_BACK_L, INPUT_PULLUP);*/
 
   //get the time
   lastTimeJSMessageRecieved = millis();
-  lastTimeThingMessageRecieved = millis();
+  // lastTimeThingMessageRecieved = millis(); //moved to ThingSuite.h
 };
 
 // **************************************************************
 //     Joystick functions
 // **************************************************************
 
-void JoystickSuite::getJoystick() {
+void JoystickSuite::getJoystick(DangerSuite &danger) {
 
   //if xbee is not avaiable and less than 100
   //increase count
@@ -199,11 +199,11 @@ void JoystickSuite::getJoystick() {
 
         //check if danger override button is pushed or not!
         if(b2) {
-          dangerOverride = true;
+          danger.dangerOverride = true;
           Serial.println("b2 "); // Debug statement
         }
         else{
-          dangerOverride = false;
+          danger.dangerOverride = false;
         }
       }
       //set the drive mode slow of fast.

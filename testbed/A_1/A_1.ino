@@ -23,10 +23,14 @@ Hardware Hookup:
 #include "RoboClaw.h"
 
 // We'll use SoftwareSerial to communicate with the XBee:
-#include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
+// #include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
 
 //#include "GlobalData.h" // used to generate instances of global variables
 #include "JoystickSuite.h" // incorporates several functions into a single structure
+#include "DangerSuite.h"
+#include "ThingSuite.h"
+#include "SetSpeed.h"
+#include "MotorSuite.h"
 
 // for TM1638 display unit
 #include "TM1638.h"
@@ -43,17 +47,11 @@ Hardware Hookup:
 //TEMP void driveMotors(void);
 //TEMP void get_roboclaw_status(void);
 
-/* <--- JoystickSuite.h
-void getJoystick(GlobalData& data, SoftwareSerial& xbeeData);
-void show_joystick_inputs(GlobalData& data);
-void set_goal_speed(GlobalData& data, SoftwareSerial& xbeeData);
-void parse_xbee_byte(SoftwareSerial& xbeeData);*/
+//void getThing(void);
+//void setThingSpeed(void);
+//void getDanger(void);
 
-void getThing(void);
-void setThingSpeed(void);
-void getDanger(void);
-
-void setSpeed(void);
+//void setSpeed(void);
 
 void refresh_tm1638(void);
 
@@ -62,7 +60,13 @@ void refresh_tm1638(void);
 // *******************************
 
 //GlobalData global_vars;
-JoystickSuite Joystick_1(11,10);
+JoystickSuite Joystick_1(11,10); // (RX, TX) <- data pins
+
+DangerSuite Danger_1;
+
+ThingSuite Thing_1;
+
+MotorSuite Motors_1;
 
 /*// *******************************
 // **   Parameters 
@@ -149,8 +153,8 @@ long lastTimeThingMessageRecieved;*/
 
 // .. and Hardware Serial (on the Arduino MEGA) for RoboClaw control
 #include <HardwareSerial.h>
-//Roboclaw Address
-#define address 0x80
+/*//Roboclaw Address
+#define address 0x80*/
 
 RoboClaw roboclaw1(&Serial2,10000);
 RoboClaw roboclaw2(&Serial3,10000); // 2
@@ -159,20 +163,9 @@ RoboClaw roboclaw2(&Serial3,10000); // 2
 // ************************
 // setup TM1638 module
 // ************************
+
 // pin 48: data         pin 50: clock     pin 52: strobe
 TM1638 tm1638(48, 50, 52);
-
-/*// ************************
-//        STRUCTS
-// ************************
-
-struct DRIVE_PARAMS {
-  int vel;
-  int ramp;
-  int thr;
-  int diag;
-};*/
-
 
 /*
 // ************************

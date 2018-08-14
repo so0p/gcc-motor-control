@@ -19,28 +19,27 @@ void loop() {
 //    Serial.println(rover_cur_spd_rt, DEC);
     
     // Get JoyStick Commands
-    Joystick_1.getJoystick();
+    Joystick_1.getJoystick(Danger_1);
     Serial.println("getJoystick done");
-//    Serial.print("After get joystick - ");
-//    Serial.print("    curL: ");
-//    Serial.print(rover_cur_spd_lt, DEC);
-//    Serial.print("   curR: ");
-//    Serial.println(rover_cur_spd_rt, DEC);
+    //    Serial.print("After get joystick - ");
+    //    Serial.print("    curL: ");
+    //    Serial.print(rover_cur_spd_lt, DEC);
+    //    Serial.print("   curR: ");
+    //    Serial.println(rover_cur_spd_rt, DEC);
     // Delta Motor Controls Added
     // 12/14/2017
 
-/*
     //***********
     // Get Thing
     //***********
     // Processing packets from SparkFun Thing sent from Wilbur
-    getThing();
+    Thing_1.getThing(Joystick_1);
 
     //***********
     // Get Danger
     //***********
     // Detects Bumper Collisions and Checks Currents
-    getDanger();
+    Danger_1.getDanger(Joystick_1);
 
     // TODO: process commands from future serial input
     // TBD....
@@ -53,30 +52,30 @@ void loop() {
     //    }
   
     // set new speed based on time and current parameters
-    setSpeed();
+    setSpeed(Joystick_1,Danger_1,Thing_1);
 
     Serial.print("goalL: ");
-    Serial.print(rover_goal_spd_lt, DEC);
+    Serial.print(Joystick_1.rover_goal_spd_lt, DEC);
     Serial.print("   goalR: ");
-    Serial.print(rover_goal_spd_rt, DEC);
+    Serial.print(Joystick_1.rover_goal_spd_rt, DEC);
     Serial.print("After set speed");
     Serial.print("    curL: ");
-    Serial.print(rover_cur_spd_lt, DEC);
+    Serial.print(Joystick_1.rover_cur_spd_lt, DEC);
     Serial.print("   curR: ");
-    Serial.print(rover_cur_spd_rt, DEC);
+    Serial.print(Joystick_1.rover_cur_spd_rt, DEC);
     //    Serial.print("battL: ");
     //    Serial.print(mcL_batt, DEC);
     //    Serial.print("   battR: ");
     //    Serial.print(mcR_batt, DEC);
-//    Serial.print("   jscnt: ");
-//    Serial.println(jscmd_cnt, DEC);
+    //    Serial.print("   jscnt: ");
+    //    Serial.println(jscmd_cnt, DEC);
   
 
     // drive the newly calculated speed
-    driveMotors();
+    Motors_1.driveMotors(roboclaw1,Joystick_1);
 
     // update the display status
-    refresh_tm1638();
+    //TEMP refresh_tm1638();
 
     // update values of motor controller
     //getStatus();
@@ -93,7 +92,7 @@ void loop() {
     
     // TODO: get button states from TM1638
     //process_tm1638_keys();
- */   
+    
   } // big if 50Hz loop
   else {
     delay(LOOP_PERIOD_MS / 10);
