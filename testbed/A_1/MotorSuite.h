@@ -8,8 +8,8 @@ class MotorSuite{
   public:
 
   MotorSuite();
-  void driveMotors(RoboClaw& roboclaw1,JoystickSuite& joystick);
-  void get_battery_status(RoboClaw& roboclaw1);
+  void driveMotors(RoboClaw& roboclaw1,RoboClaw& roboclaw2,JoystickSuite& joystick);
+  void get_battery_status(RoboClaw& roboclaw1,RoboClaw& roboclaw2);
 
   //Roboclaw Address
   #define address 0x80

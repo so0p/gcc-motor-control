@@ -60,7 +60,9 @@ void setup() {
   pinMode(BIGLIGHT_PIN, OUTPUT);
   
   // flush XBee serial stream before we get into loop()
+  Serial.println("PRE FLUSH"); //DEBUG MSG
   Joystick_1.serialPtr->flush();
+  Serial.println("PAST FLUSH"); //DEBUG MSG
   
   /* <--- JoystickSuite.h
   //set the counter to 0

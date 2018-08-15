@@ -15,7 +15,7 @@ MotorSuite::MotorSuite(){
 // **************************************************************
   
 // drive with velocity command
-void MotorSuite::driveMotors(RoboClaw& roboclaw1,JoystickSuite& joystick){
+void MotorSuite::driveMotors(RoboClaw& roboclaw1,RoboClaw& roboclaw2,JoystickSuite& joystick){
     
     //Code By Avery
 
@@ -28,24 +28,24 @@ void MotorSuite::driveMotors(RoboClaw& roboclaw1,JoystickSuite& joystick){
       if(joystick.rover_cur_spd_lt != 0 || joystick.rover_cur_spd_rt != 0) {
         roboclaw1.SpeedM1(address,joystick.rover_cur_spd_lt);  
         roboclaw1.SpeedM2(address,joystick.rover_cur_spd_lt);
-        //roboclaw2.SpeedM1(address,rover_cur_spd_rt);
-        //roboclaw2.SpeedM2(address,rover_cur_spd_rt); 
+        roboclaw2.SpeedM1(address,joystick.rover_cur_spd_rt);
+        roboclaw2.SpeedM2(address,joystick.rover_cur_spd_rt); 
       }
 
       else if(joystick.hillMode) {
         Serial.println("MotorSuite HILLMODE");
         roboclaw1.SpeedM1(address,0);
         roboclaw1.SpeedM2(address,0);
-        //roboclaw2.SpeedM1(address,0);
-        //roboclaw2.SpeedM2(address,0);      
+        roboclaw2.SpeedM1(address,0);
+        roboclaw2.SpeedM2(address,0);      
         // drive to velocity 0
       }
       else if(!joystick.hillMode) {
         Serial.println("MotorSuite HILLMODE FALSE");
         roboclaw1.BackwardM1(address,0); //Stop Motor1 
         roboclaw1.BackwardM2(address,0); //Stop Motor2 
-        //roboclaw2.BackwardM1(address,0); //Stop Motor1 
-        //roboclaw2.BackwardM2(address,0); //Stop Motor2      
+        roboclaw2.BackwardM1(address,0); //Stop Motor1 
+        roboclaw2.BackwardM2(address,0); //Stop Motor2      
         // don't drive the motors anymore... 
       }
     } // if everything is OK
@@ -54,8 +54,8 @@ void MotorSuite::driveMotors(RoboClaw& roboclaw1,JoystickSuite& joystick){
       Serial.println("MotorSuite HILLMODE BatteryOk FALSE");
       roboclaw1.BackwardM1(address,0); //Stop Motor1 
       roboclaw1.BackwardM2(address,0); //Stop Motor2 
-      //roboclaw2.BackwardM1(address,0); //Stop Motor1 
-      //roboclaw2.BackwardM2(address,0); //Stop Motor2      
+      roboclaw2.BackwardM1(address,0); //Stop Motor1 
+      roboclaw2.BackwardM2(address,0); //Stop Motor2      
     }
   } // drive_motors(0)
 //  else if (mode==MODE_ARM) {
@@ -76,13 +76,13 @@ void MotorSuite::driveMotors(RoboClaw& roboclaw1,JoystickSuite& joystick){
 // get roboclaw's battery levels
 // if roboclaw is not responsive, set voltage to 0. this will
 // indicate that RC communication is dead
-void MotorSuite::get_battery_status(RoboClaw& roboclaw1) {
+void MotorSuite::get_battery_status(RoboClaw& roboclaw1,RoboClaw& roboclaw2) {
   
   bool rc1_alive = false;
   bool rc2_alive = false;  
 
   mc1_batt = roboclaw1.ReadMainBatteryVoltage(address, &rc1_alive);
-  //mc2_batt = roboclaw2.ReadMainBatteryVoltage(address, &rc2_alive);  
+  mc2_batt = roboclaw2.ReadMainBatteryVoltage(address, &rc2_alive);  
 
   // if battery level gets low, completely stop driving
   if(mc1_batt<227 || mc2_batt<226) {

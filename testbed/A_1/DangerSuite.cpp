@@ -63,7 +63,9 @@ DangerSuite::DangerSuite(){
 
 void DangerSuite::getDanger(JoystickSuite &joystick){
   Serial.println("getDANGER");
+  
   if( dangerOverride == true){
+    Serial.println("DANGER OVERRIDE TRUE");
     dangerM1 = false;
     dangerM2 = false;
     dangerM3 = false;
@@ -86,15 +88,19 @@ void DangerSuite::getDanger(JoystickSuite &joystick){
           buttonStateBack_L = digitalRead(BUTTON_PIN_BACK_L);         
 
           if (buttonStateFront_R == LOW || buttonStateFront_L == LOW){
+            Serial.println("DANGER FRONT TRUE");
             dangerFront = true;
           }
           else {
+            Serial.println("DANGER FRONT FALSE");
             dangerFront = false;
           }
           if (buttonStateBack_R == LOW  || buttonStateBack_L == LOW){
+            Serial.println("DANGER BACK TRUE");
             dangerBack = true;
           }
           else{
+            Serial.println("DANGER BACK FALSE");
             dangerBack = false;
           }
     }

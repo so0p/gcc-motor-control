@@ -23,7 +23,7 @@ Hardware Hookup:
 #include "RoboClaw.h"
 
 // We'll use SoftwareSerial to communicate with the XBee:
-// #include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
+#include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
 
 //#include "GlobalData.h" // used to generate instances of global variables
 #include "JoystickSuite.h" // incorporates several functions into a single structure

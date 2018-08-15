@@ -106,7 +106,9 @@ class JoystickSuite{
   // ***********************
   //       XBEE Variables
   // ***********************
-  
+
+  SoftwareSerial XBee;
+  // used for the the xbee controller, data pins are submitted by the user using joystickSuite constructor
   SoftwareSerial *serialPtr; // Ptr for acccessing members of the SoftwareSerial object
   
   bool xbee_on ; // getJoystick checks this value, it should be passed to getThing which checks it too
@@ -193,11 +195,6 @@ class JoystickSuite{
   int BUTTON_PIN_FRONT_L ; //
   int BUTTON_PIN_BACK_R ; //
   int BUTTON_PIN_BACK_L ; //*/
-
-  private:
-
-  SoftwareSerial XBee; // used for the the xbee controller, data pins are submitted by the user using joystickSuite constructor
-  
 };
 #endif // JOYSTICKSUITE_H
 

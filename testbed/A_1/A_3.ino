@@ -5,7 +5,7 @@ void loop() {
 
   if( (cur_time - Joystick_1.last_loop_time) >  LOOP_PERIOD_MS) {
     Joystick_1.last_loop_time=cur_time;
-        Serial.print("loop time ");
+        Serial.println("loop time ");
         Serial.println(cur_time, DEC);
 
     //may not need since included in get joystick
@@ -55,14 +55,14 @@ void loop() {
     setSpeed(Joystick_1,Danger_1,Thing_1);
 
     Serial.print("goalL: ");
-    Serial.print(Joystick_1.rover_goal_spd_lt, DEC);
+    Serial.println(Joystick_1.rover_goal_spd_lt, DEC);
     Serial.print("   goalR: ");
-    Serial.print(Joystick_1.rover_goal_spd_rt, DEC);
-    Serial.print("After set speed");
+    Serial.println(Joystick_1.rover_goal_spd_rt, DEC);
+    Serial.println("After set speed");
     Serial.print("    curL: ");
-    Serial.print(Joystick_1.rover_cur_spd_lt, DEC);
+    Serial.println(Joystick_1.rover_cur_spd_lt, DEC);
     Serial.print("   curR: ");
-    Serial.print(Joystick_1.rover_cur_spd_rt, DEC);
+    Serial.println(Joystick_1.rover_cur_spd_rt, DEC);
     //    Serial.print("battL: ");
     //    Serial.print(mcL_batt, DEC);
     //    Serial.print("   battR: ");
@@ -72,7 +72,7 @@ void loop() {
   
 
     // drive the newly calculated speed
-    Motors_1.driveMotors(roboclaw1,Joystick_1);
+    Motors_1.driveMotors(roboclaw1,roboclaw2,Joystick_1);
 
     // update the display status
     //TEMP refresh_tm1638();
