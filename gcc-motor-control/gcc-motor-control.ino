@@ -230,10 +230,10 @@ int M5_thresh = 5;
 int M6_thresh = 6;              // undertermined values; requires testing
 
 // Pin Locations for Rover
-int BUTTON_PIN_FRONT_R = 43;  
-int BUTTON_PIN_FRONT_L = 41;
-int BUTTON_PIN_BACK_R = 47;
-int BUTTON_PIN_BACK_L = 45;     
+int BUTTON_PIN_FRONT_R = 47; //47 
+int BUTTON_PIN_FRONT_L = 45;//45
+int BUTTON_PIN_BACK_R = 43;//43
+int BUTTON_PIN_BACK_L = 41;//41     
 
 // ************************
 //       TELEMETRY
