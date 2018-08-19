@@ -10,6 +10,11 @@ Motor Controller built on Arduino
 * [XBee ZigBee](https://www.amazon.com/XBee-2mW-Wire-Antenna-ZigBee/dp/B007R9U1QA/ref=sr_1_4?ie=UTF8&qid=1506119916&sr=8-4&keywords=xbee+zigbee)
 * [Wireless GamePad V2.0 for Arduino (XBee Socket)](https://www.dfrobot.com/product-858.html)
 
+## Software Refactor 2018
+
+1. Software Modules should follow the following convention
+
+engine (gcc-motor-control.ino) -> subprocess (joystick.ino) -> libraries (joystick.h)
 
 ## Software: Table of Contents
 1. Arduino Libraries : RoboClaw and LED Display Module Factory Drivers

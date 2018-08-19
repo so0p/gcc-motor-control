@@ -13,22 +13,6 @@ void setup() {
   roboclaw1.begin(38400);
   roboclaw2.begin(38400);
 
-  jscmd.linkActive = true; // override this value until we check for it
-  jscmd.up = false;
-  jscmd.dn = false;
-  jscmd.lt = false;
-  jscmd.rt = false;
-  jscmd.b1 = false;
-  jscmd.b2 = false;
-  jscmd.b3 = false;
-  jscmd.b4 = false;
-  jscmd.r1 = false;
-  jscmd.r2 = false;
-  jscmd.l1 = false;
-  jscmd.l2 = false;
-  jscmd.st = false;
-  jscmd.se = false;
-
   // populate drive param 
   param[SLOW].vel       = ROVER_VEL_SLOW;
   param[SLOW].ramp      = ROVER_RAMP_RATE_SLOW;

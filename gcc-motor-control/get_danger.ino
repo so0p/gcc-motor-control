@@ -1,4 +1,12 @@
 void getDanger(){
+    check if danger is pushed or not
+    //check if danger override button is pushed or not!
+            if(jscmd.b2) {
+                dangerOverride = true;    
+            }
+            else{
+                dangerOverride = false;
+            }
   if( dangerOverride == true){
     dangerM1 = false;
     dangerM2 = false;

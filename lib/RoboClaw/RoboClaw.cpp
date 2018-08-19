@@ -12,19 +12,19 @@ RoboClaw::RoboClaw(HardwareSerial *serial, uint32_t tout)
 {
 	timeout = tout;
 	hserial = serial;
-//#ifdef __AVR__
-//	sserial = 0;
-//#endif
+#ifdef __AVR__
+	sserial = 0;
+#endif
 }
 
-//#ifdef __AVR__
-//RoboClaw::RoboClaw(SoftwareSerial *serial, uint32_t tout)
-//{
-//	timeout = tout;
-//	sserial = serial;
-//	hserial = 0;
-//}
-//#endif
+#ifdef __AVR__
+RoboClaw::RoboClaw(SoftwareSerial *serial, uint32_t tout)
+{
+	timeout = tout;
+	sserial = serial;
+	hserial = 0;
+}
+#endif
 
 //
 // Destructor
@@ -38,40 +38,38 @@ void RoboClaw::begin(long speed)
 	if(hserial){
 		hserial->begin(speed);
 	}
-//#ifdef __AVR__
-//	else{
-//		sserial->begin(speed);
-//	}
-//#endif
+#ifdef __AVR__
+	else{
+		sserial->begin(speed);
+	}
+#endif
 }
 
 bool RoboClaw::listen()
 {
-//#ifdef __AVR__
-//	if(sserial){
-//		return sserial->listen();
-//	}
-//#endif
+#ifdef __AVR__
+	if(sserial){
+		return sserial->listen();
+	}
+#endif
 	return false;
 }
 
 bool RoboClaw::isListening()
 {
-/*
 #ifdef __AVR__
 	if(sserial)
 		return sserial->isListening();
 #endif
-*/
 	return false;
 }
 
 bool RoboClaw::overflow()
 {
-// #ifdef __AVR__
-	// if(sserial)
-		// return sserial->overflow();
-// #endif
+#ifdef __AVR__
+	if(sserial)
+		return sserial->overflow();
+#endif
 	return false;
 }
 
@@ -79,40 +77,40 @@ int RoboClaw::peek()
 {
 	if(hserial)
 		return hserial->peek();
-// #ifdef __AVR__
-	// else
-		// return sserial->peek();
-// #endif
+#ifdef __AVR__
+	else
+		return sserial->peek();
+#endif
 }
 
 size_t RoboClaw::write(uint8_t byte)
 {
 	if(hserial)
 		return hserial->write(byte);
-// #ifdef __AVR__
-	// else
-		// return sserial->write(byte);
-// #endif
+#ifdef __AVR__
+	else
+		return sserial->write(byte);
+#endif
 }
 
 int RoboClaw::read()
 {
 	if(hserial)
 		return hserial->read();
-// #ifdef __AVR__
-	// else
-		// return sserial->read();
-// #endif
+#ifdef __AVR__
+	else
+		return sserial->read();
+#endif
 }
 
 int RoboClaw::available()
 {
 	if(hserial)
 		return hserial->available();
-// #ifdef __AVR__
-	// else
-		// return sserial->available();
-// #endif
+#ifdef __AVR__
+	else
+		return sserial->available();
+#endif
 }
 
 void RoboClaw::flush()
@@ -132,19 +130,19 @@ int RoboClaw::read(uint32_t timeout)
 		}
 		return hserial->read();
 	}
-// #ifdef __AVR__
-	// else{
-		// if(sserial->isListening()){
-			// uint32_t start = micros();
+#ifdef __AVR__
+	else{
+		if(sserial->isListening()){
+			uint32_t start = micros();
 			// Empty buffer?
-			// while(!sserial->available()){
-			   // if((micros()-start)>=timeout)
-				  // return -1;
-			// }
-			// return sserial->read();
-		// }
-	// }
-// #endif
+			while(!sserial->available()){
+			   if((micros()-start)>=timeout)
+				  return -1;
+			}
+			return sserial->read();
+		}
+	}
+#endif
 }
 
 void RoboClaw::clear()
@@ -153,12 +151,12 @@ void RoboClaw::clear()
 		while(hserial->available())
 			hserial->read();
 	}
-// #ifdef __AVR__
-	// else{
-		// while(sserial->available())
-			// sserial->read();
-	// }
-// #endif
+#ifdef __AVR__
+	else{
+		while(sserial->available())
+			sserial->read();
+	}
+#endif
 }
 
 void RoboClaw::crc_clear()

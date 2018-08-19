@@ -6,10 +6,9 @@
 #include <inttypes.h>
 #include <Stream.h>
 #include <HardwareSerial.h>
-
-//#ifdef __AVR__
-//	#include <SoftwareSerial.h>
-//#endif
+#ifdef __AVR__
+	#include <SoftwareSerial.h>
+#endif
 
 /******************************************************************************
 * Definitions
@@ -28,9 +27,9 @@ class RoboClaw : public Stream
 	uint32_t timeout;
 	
 	HardwareSerial *hserial;
-//#ifdef __AVR__
-//	SoftwareSerial *sserial;
-//#endif
+#ifdef __AVR__
+	SoftwareSerial *sserial;
+#endif
 	
 	enum {M1FORWARD = 0,
 			M1BACKWARD = 1,
@@ -127,9 +126,9 @@ class RoboClaw : public Stream
 public:
 	// public methods
 	RoboClaw(HardwareSerial *hserial,uint32_t tout);
-//#ifdef __AVR__
-//	RoboClaw(SoftwareSerial *sserial,uint32_t tout);
-//#endif
+#ifdef __AVR__
+	RoboClaw(SoftwareSerial *sserial,uint32_t tout);
+#endif
 	
 	~RoboClaw();
 

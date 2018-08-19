@@ -82,15 +82,6 @@ bool xbee_on = false;
 int xbee_counter = 0;
 long lastTimeJSMessageRecieved;
 
-struct JOYSTICK_CMD {
-  bool linkActive;      // is the JS link active?
-  bool up, dn, lt, rt;  // Up, Down, Left, Right
-  bool r1, r2, l1, l2;  // Right1, Right2, Left1, Left2
-  bool b1, b2, b3, b4;  // Button1, Button2, Button3, Button4
-  bool st, se;          // Start, Select
-  // TODO: add analogs
-};
-
 // ***********************
 //       Thing
 // ***********************
@@ -154,8 +145,6 @@ bool hillMode = true;      // maintain velocity of 0 (ie: brake if not driving)
 DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters
 
 unsigned long last_loop_time = 0;
-JOYSTICK_CMD jscmd;                  // current joystick command
-unsigned long jscmd_cnt = 0;         // count of commands from joystick
 
 COMMAND_FROM_THING_TO_MC CMDS_TO_MC;
 
