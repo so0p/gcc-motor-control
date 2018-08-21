@@ -6,7 +6,7 @@ void setup() {
   XBee.begin(9600);*/
   
   Serial.begin(57600);
-  Serial.println("SETUP START"); //DEBUG MSG
+  Serial.println(F("SETUP START")); //DEBUG MSG
 
   //For Thing on Web Control
   //Serial1.begin(115200);
@@ -60,13 +60,12 @@ void setup() {
   pinMode(BIGLIGHT_PIN, OUTPUT);
   
   // flush XBee serial stream before we get into loop()
-  Serial.println("PRE FLUSH"); //DEBUG MSG
+  Serial.println(F("PRE FLUSH")); //DEBUG MSG
   Joystick_1.serialPtr->flush();
-  Serial.println("PAST FLUSH"); //DEBUG MSG
-  
-  /* <--- JoystickSuite.h
+  Serial.println(F("PAST FLUSH")); //DEBUG MSG
+
   //set the counter to 0
-  Joystick_1.xbee_counter=0;*/
+  Joystick_1.xbee_counter=0;
 
   /* <--- JoystickSuite.h
   ///Initalizing Bumper Pins
@@ -74,10 +73,16 @@ void setup() {
   pinMode(Joystick_1.BUTTON_PIN_FRONT_L, INPUT_PULLUP);
   pinMode(Joystick_1.BUTTON_PIN_BACK_R, INPUT_PULLUP);
   pinMode(Joystick_1.BUTTON_PIN_BACK_L, INPUT_PULLUP);
-
+  
   //get the time
   Joystick_1.lastTimeJSMessageRecieved = millis();
   Joystick_1.lastTimeThingMessageRecieved = millis();*/
-  Serial.println("SETUP END"); //DEBUG MSG
+  //Initalizing Bumper Pins
+  pinMode(Danger_1.BUTTON_PIN_FRONT_R, INPUT_PULLUP);
+  pinMode(Danger_1.BUTTON_PIN_FRONT_L, INPUT_PULLUP);
+  pinMode(Danger_1.BUTTON_PIN_BACK_R, INPUT_PULLUP);
+  pinMode(Danger_1.BUTTON_PIN_BACK_L, INPUT_PULLUP);
+  
+  Serial.println(F("SETUP END")); //DEBUG MSG
 } // setup()
 

@@ -1,6 +1,7 @@
 #ifndef ThingSuite_h
 #define ThingSuite_h
-class JoystickSuite;
+//class JoystickSuite;
+#include "JoystickSuite.h";
 //#include <SoftwareSerial.h>
 
 class ThingSuite {

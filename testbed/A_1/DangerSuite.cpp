@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "DangerSuite.h"
-#include "JoystickSuite.h"
+//#include "JoystickSuite.h"
 
 DangerSuite::DangerSuite(){
   
@@ -41,20 +41,20 @@ DangerSuite::DangerSuite(){
   int M6_thresh = 6;              // undertermined values; requires testing
   
   // Pin Locations for Rover
-  int BUTTON_PIN_FRONT_R = 43;  
-  int BUTTON_PIN_FRONT_L = 41;
-  int BUTTON_PIN_BACK_R = 47;
-  int BUTTON_PIN_BACK_L = 45;
+  BUTTON_PIN_FRONT_R = 47;  
+  BUTTON_PIN_FRONT_L = 45;
+  BUTTON_PIN_BACK_R = 43; 
+  BUTTON_PIN_BACK_L = 41; 
   
   // ************************
   // Setup
   // ************************
   
-  //Initalizing Bumper Pins
+  /*//Initalizing Bumper Pins
   pinMode(BUTTON_PIN_FRONT_R, INPUT_PULLUP);
   pinMode(BUTTON_PIN_FRONT_L, INPUT_PULLUP);
   pinMode(BUTTON_PIN_BACK_R, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_BACK_L, INPUT_PULLUP);
+  pinMode(BUTTON_PIN_BACK_L, INPUT_PULLUP);*/
 };
 
 // **************************************************************
@@ -62,10 +62,10 @@ DangerSuite::DangerSuite(){
 // **************************************************************
 
 void DangerSuite::getDanger(JoystickSuite &joystick){
-  Serial.println("getDANGER");
+  Serial.println(F("getDANGER"));
   
   if( dangerOverride == true){
-    Serial.println("DANGER OVERRIDE TRUE");
+    Serial.println(F("DANGER OVERRIDE TRUE"));
     dangerM1 = false;
     dangerM2 = false;
     dangerM3 = false;
@@ -75,37 +75,37 @@ void DangerSuite::getDanger(JoystickSuite &joystick){
 
     dangerFront = false;
     dangerBack = false;
-
   }
 
   else {
-
+    Serial.println(F("DANGER OVERRIDE FALSE"));
     if(joystick.mode == MODE_ROVER){
-          Serial.println("DANGER MODE_ROVER");
+          /*Serial.println("DANGER READ BEFORE");
           buttonStateFront_R = digitalRead(BUTTON_PIN_FRONT_R);
+          Serial.println(buttonStateFront_R);
           buttonStateBack_R = digitalRead(BUTTON_PIN_BACK_R);
           buttonStateFront_L = digitalRead(BUTTON_PIN_FRONT_L);
-          buttonStateBack_L = digitalRead(BUTTON_PIN_BACK_L);         
+          buttonStateBack_L = digitalRead(BUTTON_PIN_BACK_L);*/  
 
           if (buttonStateFront_R == LOW || buttonStateFront_L == LOW){
-            Serial.println("DANGER FRONT TRUE");
+            Serial.println(F("DANGER FRONT TRUE**********************"));
             dangerFront = true;
           }
           else {
-            Serial.println("DANGER FRONT FALSE");
+            Serial.println(F("DANGER FRONT FALSE"));
             dangerFront = false;
           }
           if (buttonStateBack_R == LOW  || buttonStateBack_L == LOW){
-            Serial.println("DANGER BACK TRUE");
+            Serial.println(F("DANGER BACK TRUE************************88"));
             dangerBack = true;
           }
           else{
-            Serial.println("DANGER BACK FALSE");
+            Serial.println(F("DANGER BACK FALSE"));
             dangerBack = false;
           }
     }
     else if(joystick.mode == MODE_ARM){
-      Serial.println("DANGER MODE_ARM");
+      Serial.println(F("DANGER MODE_ARM"));
       if(dangerCounter == 50){
         
 //        roboclaw1.ReadCurrents(address, currentM1, currentM2);

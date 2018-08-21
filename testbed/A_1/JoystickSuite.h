@@ -1,15 +1,15 @@
 #ifndef JoystickSuite_h
 #define JoystickSuite_h
 #include <SoftwareSerial.h>
-class DangerSuite;
-//#include "DangerSuite.h"
+#include <avr/pgmspace.h>
+class DangerSuite; // Forward Declaration to prevent cyclical dependencies
 
 class JoystickSuite{
   public:
 
-  //*************************************
-  //     Constructors and Member Function
-  //*************************************
+  // ********************************
+  // Constructors and Member Function
+  // ********************************
   
   JoystickSuite(int rx,int tx); // User provides desired data-pins for SoftwareSerial object to use
   
@@ -103,9 +103,9 @@ class JoystickSuite{
   //bool megaSpeed ; //= 0;
   //int velocity ; //= FAST_VELOCITY;
   
-  // ***********************
-  //       XBEE Variables
-  // ***********************
+  // **************
+  // XBEE Variables
+  // **************
 
   SoftwareSerial XBee;
   // used for the the xbee controller, data pins are submitted by the user using joystickSuite constructor
@@ -115,9 +115,9 @@ class JoystickSuite{
   int xbee_counter ; //
   long lastTimeJSMessageRecieved;
 
-  // ***********************
-  // Joystick Command Struct
-  // ***********************
+  // **************************
+  // Joystick Command Variables //Formerly a struct
+  // **************************
 
   bool linkActive;      // is the JS link active?
   bool up, dn, lt, rt;  // Up, Down, Left, Right
@@ -135,15 +135,15 @@ class JoystickSuite{
   int motorNum; // accessed by getThing
   int duration;*/ 
   
-  // ***********************
+  // ***************
   // Thing Variables        
-  // ***********************
+  // ***************
   
   //long lastTimeThingMessageRecieved; // used in getJoystick()
   
-  // ************************
+  // **********************
   // Drive Parameter Struct
-  // ************************
+  // **********************
   
   typedef struct {
     int vel;

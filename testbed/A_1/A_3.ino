@@ -4,23 +4,23 @@ void loop() {
   unsigned long cur_time = millis();
 
   if( (cur_time - Joystick_1.last_loop_time) >  LOOP_PERIOD_MS) {
-    Joystick_1.last_loop_time=cur_time;
-        Serial.println("loop time ");
-        Serial.println(cur_time, DEC);
+    Joystick_1.last_loop_time = cur_time;
+        // Serial.println("loop time ");
+        // Serial.println(cur_time, DEC);
 
     //may not need since included in get joystick
     // Check if joystick is on
 
     //Checking before loop
-//    Serial.print("Before the motors - ");
-//    Serial.print("    curL: ");
-//    Serial.print(rover_cur_spd_lt, DEC);
-//    Serial.print("   curR: ");
-//    Serial.println(rover_cur_spd_rt, DEC);
+    //    Serial.print("Before the motors - ");
+    //    Serial.print("    curL: ");
+    //    Serial.print(rover_cur_spd_lt, DEC);
+    //    Serial.print("   curR: ");
+    //    Serial.println(rover_cur_spd_rt, DEC);
     
     // Get JoyStick Commands
     Joystick_1.getJoystick(Danger_1);
-    Serial.println("getJoystick done");
+    Serial.println(F("getJoystick done"));
     //    Serial.print("After get joystick - ");
     //    Serial.print("    curL: ");
     //    Serial.print(rover_cur_spd_lt, DEC);
@@ -39,11 +39,18 @@ void loop() {
     // Get Danger
     //***********
     // Detects Bumper Collisions and Checks Currents
+    Serial.println(F("DANGER READ BEFORE"));
+    Danger_1.buttonStateFront_R = digitalRead(Danger_1.BUTTON_PIN_FRONT_R);
+    Serial.println(Danger_1.buttonStateFront_R);
+    Danger_1.buttonStateBack_R = digitalRead(Danger_1.BUTTON_PIN_BACK_R);
+    Danger_1.buttonStateFront_L = digitalRead(Danger_1.BUTTON_PIN_FRONT_L);
+    Danger_1.buttonStateBack_L = digitalRead(Danger_1.BUTTON_PIN_BACK_L);
+          
     Danger_1.getDanger(Joystick_1);
 
     // TODO: process commands from future serial input
     // TBD....
-    
+
     // If data comes in from serial monitor, send it out to XBee  
     // this is our debug route
     //    if (Serial.available()) {
@@ -54,14 +61,14 @@ void loop() {
     // set new speed based on time and current parameters
     setSpeed(Joystick_1,Danger_1,Thing_1);
 
-    Serial.print("goalL: ");
+    Serial.print(F("goalL: "));
     Serial.println(Joystick_1.rover_goal_spd_lt, DEC);
-    Serial.print("   goalR: ");
+    Serial.print(F("   goalR: "));
     Serial.println(Joystick_1.rover_goal_spd_rt, DEC);
-    Serial.println("After set speed");
+    Serial.println(F("After set speed"));
     Serial.print("    curL: ");
     Serial.println(Joystick_1.rover_cur_spd_lt, DEC);
-    Serial.print("   curR: ");
+    Serial.print(F("   curR: "));
     Serial.println(Joystick_1.rover_cur_spd_rt, DEC);
     //    Serial.print("battL: ");
     //    Serial.print(mcL_batt, DEC);
@@ -86,7 +93,6 @@ void loop() {
     // check if arduino is alive
     //ping();
   
-
     // TODO: get MC battery levels. If 0, MC is not responding (ie: error)
     //get_roboclaw_status();
     

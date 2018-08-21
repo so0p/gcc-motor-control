@@ -15,7 +15,7 @@ void setSpeed(JoystickSuite& joystick,DangerSuite& danger,ThingSuite& thing){
     joystick.rover_cur_spd_lt = 0;
     joystick.rover_cur_spd_rt = 0;
 
-    if (danger.dangerBack){
+    /*TEMP if (danger.dangerBack){
       if(  (joystick.rover_goal_spd_lt > 0 )) {  
           if(joystick.rover_cur_spd_lt < joystick.rover_goal_spd_lt) {
             joystick.rover_cur_spd_lt += goal_ramp;
@@ -61,7 +61,7 @@ void setSpeed(JoystickSuite& joystick,DangerSuite& danger,ThingSuite& thing){
             Serial.println("SetSpeed FRONT RIGHT -");
           }      
         }
-    }
+    }*/
 
 //    joystick.arm_goal_spd_m1 = 0;
 //    joystick.arm_goal_spd_m2 = 0;

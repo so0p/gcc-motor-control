@@ -1,9 +1,7 @@
 #ifndef SetSpeed_h
 #define SetSpeed_h
-#include "JoystickSuite.h"
-#include "DangerSuite.h"
 #include "ThingSuite.h"
-#include <SoftwareSerial.h>
+#include "DangerSuite.h"
 
 void setSpeed(JoystickSuite& joystick,DangerSuite& danger,ThingSuite& thing);
 

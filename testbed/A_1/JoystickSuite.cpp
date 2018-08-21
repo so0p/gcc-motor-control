@@ -75,9 +75,9 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   // bool megaSpeed = 0;
   // int velocity = FAST_VELOCITY;
 
-  // ***********************
-  //       Joystick Commmand Variables
-  // ***********************
+  // ***************************
+  // Joystick Commmand Variables
+  // ***************************
 
   linkActive = true; // override this value until we check for it
   up = false;
@@ -166,7 +166,7 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
 };
 
 // **************************************************************
-//     Joystick functions
+//                        Joystick Functions
 // **************************************************************
 
 void JoystickSuite::getJoystick(DangerSuite &danger) {
@@ -179,7 +179,7 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
   //Serial.println("No Pointer"); //DEBUG
   
   if (serialPtr->available()>0){ // softwareSerial object
-    Serial.println("XBEE ON");
+    Serial.println(F("XBEE ON"));
     lastTimeJSMessageRecieved = millis();
     xbee_on = true;
     xbee_counter =0;
@@ -187,7 +187,7 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
     //****Rover Mode******
     // RoverID is 0, ArmID is 1
     if (mode==MODE_ROVER){
-      Serial.println("MODE ROVER "); // Debug statement
+      Serial.println(F("MODE ROVER ")); // Debug statement
       // read from XBee stream. parse and update joystick command variables
       byte bytes_to_read = serialPtr->available();
       
@@ -200,7 +200,7 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
         //check if danger override button is pushed or not!
         if(b2) {
           danger.dangerOverride = true;
-          Serial.println("b2 "); // Debug statement
+          Serial.println(F("b2 ")); // Debug statement
         }
         else{
           danger.dangerOverride = false;
@@ -210,11 +210,11 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
       //While you hold down r2 FAST mode is engaged
       if(r2) {
         drive_mode = FAST;
-        Serial.println("r2 FAST "); // Debug statement 
+        Serial.println(F("r2 FAST ")); // Debug statement 
       }
       else {
         drive_mode = SLOW;
-        Serial.println("r2 SLOW "); // Debug statement
+        Serial.println(F("r2 SLOW ")); // Debug statement
       }
 
       set_goal_speed();
@@ -223,14 +223,14 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
     // b4 tells us to toggle the hold mode
     bool cur_b4 = b4;
     if(!last_b4 && cur_b4) {
-      Serial.println("B4 PRESSED dahksjdaksjdahskdashjdahkjsdhasjdkahsjdajkshdkashh"); // Debug statement
+      Serial.println(F("B4 PRESSED dahksjdaksjdahskdashjdahkjsdhasjdkahsjdajkshdkashh")); // Debug statement
       hillMode = !hillMode;
     }
     last_b4 = cur_b4; // set lastmode and current mode equal
 
     //Arm Mode
     if (mode==MODE_ARM){
-      Serial.println("MODE ARM "); // Debug statement
+      Serial.println(F("MODE ARM ")); // Debug statement
       //if robotID=1 then arm mode
       drive_mode = ARM;
       hillMode= true;
@@ -241,7 +241,7 @@ void JoystickSuite::getJoystick(DangerSuite &danger) {
     }
   }
   else{
-    Serial.println("XBEE OFF");
+    Serial.println(F("XBEE OFF"));
     xbee_on=false;
     if(millis() - lastTimeJSMessageRecieved > 1000){
       rover_goal_spd_lt = 0;
@@ -294,42 +294,42 @@ void JoystickSuite::set_goal_speed() {
     if (mode==MODE_ROVER){
       //rover if robotID=0
       if(up && lt) {
-        Serial.println("UP LT "); // Debug statement
+        Serial.println(F("UP LT ")); // Debug statement
         rover_goal_spd_lt = drive_parameters[drive_mode].vel - drive_parameters[drive_mode].diag;
         rover_goal_spd_rt = drive_parameters[drive_mode].vel + drive_parameters[drive_mode].diag;    
       }
       else if(up && rt) {
-        Serial.println("UP RT "); // Debug statement
+        Serial.println(F("UP RT ")); // Debug statement
         rover_goal_spd_lt = drive_parameters[drive_mode].vel + drive_parameters[drive_mode].diag;
         rover_goal_spd_rt = drive_parameters[drive_mode].vel - drive_parameters[drive_mode].diag;    
       }
       else if(dn && lt) {
-        Serial.println("DN LT "); // Debug statement
+        Serial.println(F("DN LT ")); // Debug statement
         rover_goal_spd_lt = -drive_parameters[drive_mode].vel + drive_parameters[drive_mode].diag;
         rover_goal_spd_rt = -drive_parameters[drive_mode].vel - drive_parameters[drive_mode].diag;    
       }
       else if(dn && rt) {
-        Serial.println("DN RT "); // Debug statement
+        Serial.println(F("DN RT ")); // Debug statement
         rover_goal_spd_lt = -drive_parameters[drive_mode].vel - drive_parameters[drive_mode].diag;
         rover_goal_spd_rt = -drive_parameters[drive_mode].vel + drive_parameters[drive_mode].diag;    
       }  
       else if(up) {
-        Serial.println("UP "); // Debug statement
+        Serial.println(F("UP ")); // Debug statement
         rover_goal_spd_lt = drive_parameters[drive_mode].vel;
         rover_goal_spd_rt = drive_parameters[drive_mode].vel;
       }
       else if(dn) {
-        Serial.println("DN "); // Debug statement
+        Serial.println(F("DN ")); // Debug statement
         rover_goal_spd_lt = -drive_parameters[drive_mode].vel;
         rover_goal_spd_rt = -drive_parameters[drive_mode].vel;
       }
       else if(lt) {
-        Serial.println("LT "); // Debug statement
+        Serial.println(F("LT ")); // Debug statement
         rover_goal_spd_lt = -drive_parameters[drive_mode].vel;
         rover_goal_spd_rt = drive_parameters[drive_mode].vel;    
       }
       else if(rt) {
-        Serial.println("RT "); // Debug statement
+        Serial.println(F("RT ")); // Debug statement
         rover_goal_spd_lt = drive_parameters[drive_mode].vel;
         rover_goal_spd_rt = -drive_parameters[drive_mode].vel;    
       }
@@ -347,37 +347,37 @@ void JoystickSuite::set_goal_speed() {
       //GRIP:!!!!!!!!!!!!!!!!!!
       // Grip open 
       if(b1) {
-        Serial.println("bL "); // Debug statement
+        Serial.println(F("bL ")); // Debug statement
         arm_goal_spd_m6 = drive_parameters[drive_mode].vel;
       }
 
       // Grip close
       if(b3) {
-        Serial.println("b3 "); // Debug statement
+        Serial.println(F("b3 ")); // Debug statement
         arm_goal_spd_m6 = -drive_parameters[drive_mode].vel;
       }
       //WRIST:
       // Wrist right
       if(rt) {
-        Serial.println("RT "); // Debug statement
+        Serial.println(F("RT ")); // Debug statement
         arm_goal_spd_m4 = drive_parameters[drive_mode].vel;
         arm_goal_spd_m5 = drive_parameters[drive_mode].vel;
       }
       // Wrist left
       if(lt) {
-        Serial.println("LT "); // Debug statement
+        Serial.println(F("LT ")); // Debug statement
         arm_goal_spd_m4 = -drive_parameters[drive_mode].vel;
         arm_goal_spd_m5 = -drive_parameters[drive_mode].vel;
       }
       //Wrist up
       if(up) {
-        Serial.println("UP "); // Debug statement
+        Serial.println(F("UP ")); // Debug statement
         arm_goal_spd_m4 = -drive_parameters[drive_mode].vel;
         arm_goal_spd_m5 = drive_parameters[drive_mode].vel;
       }
       //Wrist down
       if(dn) {
-        Serial.println("DN "); // Debug statement
+        Serial.println(F("DN ")); // Debug statement
         arm_goal_spd_m4 = drive_parameters[drive_mode].vel;
         arm_goal_spd_m5 = -drive_parameters[drive_mode].vel;
       }
@@ -385,36 +385,36 @@ void JoystickSuite::set_goal_speed() {
       //ELBOW:
       //Elbow up
       if(l1) {
-        Serial.println("L1 "); // Debug statement
+        Serial.println(F("L1 ")); // Debug statement
         arm_goal_spd_m3 = -drive_parameters[drive_mode].vel;
       }
       //Elbow down
       if(l2) {
-        Serial.println("L2 "); // Debug statement
+        Serial.println(F("L2 ")); // Debug statement
         arm_goal_spd_m3 = drive_parameters[drive_mode].vel;
       }
 
       //SHOULDER:
       //Shoulder up
       if(r1) {
-        Serial.println("R1 "); // Debug statement
+        Serial.println(F("R1 ")); // Debug statement
         arm_goal_spd_m2 = drive_parameters[drive_mode].vel;
       }
       //Shoulder down
       if(r2) {
-        Serial.println("R2 "); // Debug statement
+        Serial.println(F("R2 ")); // Debug statement
         arm_goal_spd_m2 = -drive_parameters[drive_mode].vel;
       }
 
       //BASE:
       //Base left
       if(b2) {
-        Serial.println("B2 "); // Debug statement
+        Serial.println(F("B2 ")); // Debug statement
         arm_goal_spd_m1 = -drive_parameters[drive_mode].vel;
       }
       //Base right
       if(b4) {
-        Serial.println("B4 "); // Debug statement
+        Serial.println(F("B4 ")); // Debug statement
         arm_goal_spd_m1 = drive_parameters[drive_mode].vel;
       }
     }
@@ -428,22 +428,22 @@ void JoystickSuite::set_goal_speed() {
 
 // debug code for showing joystick inputs
 void JoystickSuite::show_joystick_inputs() {
-  Serial.println("SHOW JOYSTICK "); // Debug statement
+  Serial.println(F("SHOW JOYSTICK ")); // Debug statement
   
-  if(up) Serial.print("UP ");
-  if(dn) Serial.print("DN ");
-  if(lt) Serial.print("LT ");
-  if(rt) Serial.print("RT ");
-  if(r1) Serial.print("R1 ");
-  if(r2) Serial.print("R2 ");
-  if(l1) Serial.print("L1 ");
-  if(l2) Serial.print("L2 ");
-  if(b1) Serial.print("B1 ");
-  if(b2) Serial.print("B2 ");
-  if(b3) Serial.print("B3 ");
-  if(b4) Serial.print("B4 ");
-  if(st) Serial.print("ST ");
-  if(se) Serial.print("SE ");
+  if(up) Serial.print(F("UP "));
+  if(dn) Serial.print(F("DN "));
+  if(lt) Serial.print(F("LT "));
+  if(rt) Serial.print(F("RT "));
+  if(r1) Serial.print(F("R1 "));
+  if(r2) Serial.print(F("R2 "));
+  if(l1) Serial.print(F("L1 "));
+  if(l2) Serial.print(F("L2 "));
+  if(b1) Serial.print(F("B1 "));
+  if(b2) Serial.print(F("B2 "));
+  if(b3) Serial.print(F("B3 "));
+  if(b4) Serial.print(F("B4 "));
+  if(st) Serial.print(F("ST "));
+  if(se) Serial.print(F("SE "));
   //  Serial.print(jscmd_cnt, DEC);
   Serial.println();   
 } // show_joystick_inputs()

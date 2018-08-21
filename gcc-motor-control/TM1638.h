@@ -50,7 +50,7 @@ class TM1638 : public TM16XX
     /** Set the display to a unsigned binary number */
     void setDisplayToBinNumber(byte number, byte dots,
 		const byte numberFont[] = NUMBER_FONT);
-   
+
     /** Set the LED at pos to color (TM1638_COLOR_RED, TM1638_COLOR_GREEN or both) */
     virtual void setLED(byte color, byte pos);
     /** Set the LEDs. MSB byte for the green LEDs, LSB for the red LEDs */
@@ -66,4 +66,3 @@ class TM1638 : public TM16XX
 };
 
 #endif
-

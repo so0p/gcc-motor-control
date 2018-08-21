@@ -8,6 +8,7 @@ class MotorSuite{
   public:
 
   MotorSuite();
+  ~MotorSuite();
   void driveMotors(RoboClaw& roboclaw1,RoboClaw& roboclaw2,JoystickSuite& joystick);
   void get_battery_status(RoboClaw& roboclaw1,RoboClaw& roboclaw2);
 
@@ -18,8 +19,7 @@ class MotorSuite{
   unsigned int mc2_batt ;
   unsigned int mc3_batt ;     //Checking battery for MC3, specifically needed for the arm
   
-  bool batteryOK ;            // battery status is OK flag
+  volatile bool batteryOK ;            // battery status is OK flag
   
-  private:
 };
 #endif // MOTORSUITE_H

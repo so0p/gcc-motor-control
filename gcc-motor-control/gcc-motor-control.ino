@@ -15,6 +15,7 @@ Hardware Hookup:
 
 *****************************************************************/
 
+
 // **************************************************************
 //     LIBRARIES
 // **************************************************************
@@ -23,52 +24,17 @@ Hardware Hookup:
 #include "RoboClaw.h"
 
 // We'll use SoftwareSerial to communicate with the XBee:
-#include <SoftwareSerial.h> // <--- not needed, already included in headers for RoboClaw.h and GlobalData.h
-
-//OBSOLETE #include "GlobalData.h" // used to generate instances of global variables
-#include "JoystickSuite.h" // incorporates several functions into a single structure
-#include "DangerSuite.h"
-#include "ThingSuite.h"
-#include "SetSpeed.h"
-#include "MotorSuite.h"
+#include <SoftwareSerial.h>
 
 // for TM1638 display unit
 #include "TM1638.h"
 
-//#define cmdDelay 150 // WHAT IS THIS USED FOR?
+//#define cmdDelay 150
 
 // Digital output for visual indication of Ludicrous mode
 #define BIGLIGHT_PIN 31
 
 // *******************************
-// **   Prototypes
-// *******************************
-
-//TEMP void driveMotors(void);
-//TEMP void get_roboclaw_status(void);
-
-//void getThing(void);
-//void setThingSpeed(void);
-//void getDanger(void);
-
-//void setSpeed(void);
-
-//void refresh_tm1638(void);
-
-// *****************************
-// Global Objects Initialization
-// *****************************
-
-//GlobalData global_vars;
-JoystickSuite Joystick_1(11,10); // (RX, TX) <- data pins
-
-DangerSuite Danger_1;
-
-ThingSuite Thing_1;
-
-MotorSuite Motors_1;
-
-/*// *******************************
 // **   Parameters 
 // *******************************
 
@@ -102,35 +68,29 @@ MotorSuite Motors_1;
 #define FAST      1
 #define ARM       2
 
-#define LOOP_PERIOD_MS 20   // 50Hz Loop*/
+#define LOOP_PERIOD_MS 20   // 50Hz Loop
 
-/*// ***********************
+// ***********************
 //       XBEE
 // ***********************
+
 // XBee's DOUT (TX) is connected to pin 2 (Arduino's Software RX)
 // XBee's DIN (RX) is connected to pin 3 (Arduino's Software TX)
 // on xbee shield, place jumper on XB_TX_11 and DIGITAL, and
 // XB_RX_10 and DIGITAL
-SoftwareSerial XBee(11, 10); // RX, TX (this is confusing and wrong, probably!)*/
-
-/* ---> GlobalData.h
-
+SoftwareSerial XBee(11, 10); // RX, TX (this is confusing and wrong, probably!)
 bool xbee_on = false;
 int xbee_counter = 0;
-long lastTimeJSMessageRecieved;*/
+long lastTimeJSMessageRecieved;
 
-/* ---> GlobalData.h
-  
-  struct JOYSTICK_CMD {
+struct JOYSTICK_CMD {
   bool linkActive;      // is the JS link active?
   bool up, dn, lt, rt;  // Up, Down, Left, Right
   bool r1, r2, l1, l2;  // Right1, Right2, Left1, Left2
   bool b1, b2, b3, b4;  // Button1, Button2, Button3, Button4
   bool st, se;          // Start, Select
   // TODO: add analogs
-};*/
-
-/* ---> GlobalData.h
+};
 
 // ***********************
 //       Thing
@@ -141,7 +101,7 @@ struct COMMAND_FROM_THING_TO_MC{
   int motorNum;
   int duration;
 };
-long lastTimeThingMessageRecieved;*/
+long lastTimeThingMessageRecieved;
 
 // ************************
 //        ROBOCLAW
@@ -153,8 +113,8 @@ long lastTimeThingMessageRecieved;*/
 
 // .. and Hardware Serial (on the Arduino MEGA) for RoboClaw control
 #include <HardwareSerial.h>
-/*//Roboclaw Address
-#define address 0x80*/
+//Roboclaw Address
+#define address 0x80
 
 RoboClaw roboclaw1(&Serial2,10000);
 RoboClaw roboclaw2(&Serial3,10000); // 2
@@ -163,11 +123,24 @@ RoboClaw roboclaw2(&Serial3,10000); // 2
 // ************************
 // setup TM1638 module
 // ************************
-
-// pin 48: data    pin 50: clock    pin 52: strobe
+// pin 48: data         pin 50: clock     pin 52: strobe
 TM1638 tm1638(48, 50, 52);
 
-/*
+// ************************
+//        STRUCTS
+// ************************
+
+
+
+struct DRIVE_PARAMS {
+  int vel;
+  int ramp;
+  int thr;
+  int diag;
+};
+
+
+
 // ************************
 //      GLOBAL VARIABLES
 // ************************
@@ -220,14 +193,9 @@ bool batteryOK = true;               // battery status is OK flag
 // delete if not being used....
 //bool megaSpeed = 0;
 //int velocity = FAST_VELOCITY;
-*/
 
-/*DRIVE_PARAMS param[ROVER_SPEED_SETTINGS];  // LUT for driving parameters, this is an array containing instances of the struct
-JOYSTICK_CMD jscmd;                  // current joystick command
-COMMAND_FROM_THING_TO_MC CMDS_TO_MC;*/
-
-/*// ************************
-//    DANGER -> Moved to GlobalData.h
+// ************************
+//    DANGER
 // ************************
 
 bool dangerOverride = false;                        // Danger Override
@@ -263,19 +231,142 @@ int M5_thresh = 5;
 int M6_thresh = 6;              // undertermined values; requires testing
 
 // Pin Locations for Rover
-int BUTTON_PIN_FRONT_R = 43;  
-int BUTTON_PIN_FRONT_L = 41;
-int BUTTON_PIN_BACK_R = 47;
-int BUTTON_PIN_BACK_L = 45;*/     
+int BUTTON_PIN_FRONT_R = 47; //47 
+int BUTTON_PIN_FRONT_L = 45;//45
+int BUTTON_PIN_BACK_R = 43;//43
+int BUTTON_PIN_BACK_L = 41;//41     
 
-/*// ************************
+// ************************
 //       TELEMETRY
 // ************************
 
-uint8_t currentM1; <-- currently in DangerSuite.h
+uint8_t currentM1;
 uint8_t currentM2;
 uint8_t currentM3;
 uint8_t currentM4;
 uint8_t currentM5;
-uint8_t currentM6;*/
+uint8_t currentM6;
+
+
+/* ************************************************************
+ *  Main Loop
+   ======================================
+   cycle at the rate of LOOP_PERIOD_MS:
+     - get TM1638 buttons
+     - get joystick inputs
+     - read TBD serial interface
+     - send debug msg to joystick if available
+     - determine new motor speed
+     - set new motor speed
+     - update TM1638 display
+  ************************************************************
+*/
+  
+void loop() {
+    
+  // get current time in millis
+  unsigned long cur_time = millis();
+
+  if( (cur_time - last_loop_time) >  LOOP_PERIOD_MS) {
+    last_loop_time = cur_time;
+    //    Serial.print("loop time ");
+    //    Serial.println(cur_time, DEC);
+
+    //may not need since included in get joystick
+    // Check if joystick is on
+    
+
+    //Checking before loop
+//    Serial.print("Before the motors - ");
+//    Serial.print("    curL: ");
+//    Serial.print(rover_cur_spd_lt, DEC);
+//    Serial.print("   curR: ");
+//    Serial.println(rover_cur_spd_rt, DEC);
+
+    // Get JoyStick Commands
+    getJoystick();
+//    Serial.print("After get joystick - ");
+//    Serial.print("    curL: ");
+//    Serial.print(rover_cur_spd_lt, DEC);
+//    Serial.print("   curR: ");
+//    Serial.println(rover_cur_spd_rt, DEC);
+    // Delta Motor Controls Added
+    // 12/14/2017
+
+
+    //***********
+    // Get Thing
+    //***********
+    // Processing packets from SparkFun Thing sent from Wilbur
+    getThing();
+
+    //***********
+    // Get Danger
+    //***********
+    // Detects Bumper Collisions and Checks Currents
+    getDanger();
+
+
+
+
+
+    // TODO: process commands from future serial input
+    // TBD....
+    
+    // If data comes in from serial monitor, send it out to XBee  
+    // this is our debug route
+    //    if (Serial.available()) {
+    //      Serial.println("sending something...");
+    //      XBee.write(Serial.read());
+    //    }
+  
+    // set new speed based on time and current parameters
+    setSpeed();
+
+    Serial.print("goalL: ");
+    Serial.print(rover_goal_spd_lt, DEC);
+    Serial.print("   goalR: ");
+    Serial.print(rover_goal_spd_rt, DEC);
+    Serial.print("After set speed");
+    Serial.print("    curL: ");
+    Serial.print(rover_cur_spd_lt, DEC);
+    Serial.print("   curR: ");
+    Serial.print(rover_cur_spd_rt, DEC);
+    //    Serial.print("battL: ");
+    //    Serial.print(mcL_batt, DEC);
+    //    Serial.print("   battR: ");
+    //    Serial.print(mcR_batt, DEC);
+//    Serial.print("   jscnt: ");
+//    Serial.println(jscmd_cnt, DEC);
+  
+
+    // drive the newly calculated speed
+    driveMotors();
+
+    // update the display status
+    refresh_tm1638();
+
+    // update values of motor controller
+    //getStatus();
+
+    // send information up to web client
+    //sendTelemetry();
+
+    // check if arduino is alive
+    //ping();
+  
+
+    // TODO: get MC battery levels. If 0, MC is not responding (ie: error)
+    //get_roboclaw_status();
+    
+    // TODO: get button states from TM1638
+    //process_tm1638_keys();
+    
+  } // big if 50Hz loop
+  else {
+    delay(LOOP_PERIOD_MS / 10);
+  }
+  
+} // loop()
+
 

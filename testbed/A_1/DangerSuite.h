@@ -1,8 +1,8 @@
 #ifndef DangerSuite_h
 #define DangerSuite_h
-class JoystickSuite; // Forward Declaration needed to prevent cyclical dependencies
-//#include "JoystickSuite.h"
-#include <SoftwareSerial.h>
+//class JoystickSuite; // Forward Declaration needed to prevent cyclical dependencies
+#include "JoystickSuite.h"
+//#include <SoftwareSerial.h>
 
 class DangerSuite{
   public:
@@ -47,20 +47,20 @@ class DangerSuite{
   int M6_thresh ; //              undertermined values; requires testing
   
   // Pin Locations for Rover
-  int BUTTON_PIN_FRONT_R ; // 
-  int BUTTON_PIN_FRONT_L ; //
-  int BUTTON_PIN_BACK_R ; //
-  int BUTTON_PIN_BACK_L ; //
+  uint8_t BUTTON_PIN_FRONT_R ; // 
+  uint8_t BUTTON_PIN_FRONT_L ; //
+  uint8_t BUTTON_PIN_BACK_R ; //
+  uint8_t BUTTON_PIN_BACK_L ; //
 
   // ************************
   //       TELEMETRY
   // ************************
   
-  uint8_t currentM1;
-  uint8_t currentM2;
-  uint8_t currentM3;
-  uint8_t currentM4;
-  uint8_t currentM5;
-  uint8_t currentM6;
+  uint8_t currentM1 ;
+  uint8_t currentM2 ;
+  uint8_t currentM3 ;
+  uint8_t currentM4 ;
+  uint8_t currentM5 ;
+  uint8_t currentM6 ;
 };
 #endif // DANGERSUITE_H
