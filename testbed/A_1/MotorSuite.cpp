@@ -10,8 +10,6 @@ MotorSuite::MotorSuite(){
   batteryOK = true;               // battery status is OK flag
 };
 
-MotorSuite::~MotorSuite(){};
-
 // **************************************************************
 //     Drive Motors & get Roboclaw Status
 // **************************************************************

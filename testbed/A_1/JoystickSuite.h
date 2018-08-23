@@ -58,9 +58,8 @@ class JoystickSuite{
   //      GLOBAL VARIABLES
   // ************************
   
-  
   //HardCode the Mode of Rover
-  int mode ; //= MODE_ROVER;
+  const byte mode = MODE_ROVER;
   
   byte drive_mode ; // indicates which driving profile is currently used
   bool hillMode ; // maintain velocity of 0 (ie: brake if not driving)
@@ -71,11 +70,10 @@ class JoystickSuite{
   
   // current and goal speeds for each side
   
-  
-  int rover_cur_spd_lt  ;                 // current left motor speed for Rover
-  int rover_cur_spd_rt  ;                 // current right motor speed for Rover
-  int rover_goal_spd_lt ;                 // left motor goal speed for Rover
-  int rover_goal_spd_rt ;                 // right motor goal speed for Rover 
+  int rover_cur_spd_lt  ;               // current left motor speed for Rover
+  int rover_cur_spd_rt  ;               // current right motor speed for Rover
+  int rover_goal_spd_lt ;               // left motor goal speed for Rover
+  int rover_goal_spd_rt ;               // right motor goal speed for Rover 
   int arm_cur_spd_m1  ;                 // current motor1 speed for Arm
   int arm_cur_spd_m2  ;                 // current motor2 speed for Arm
   int arm_cur_spd_m3  ;                 // current motor3 speed for Arm
@@ -89,15 +87,9 @@ class JoystickSuite{
   int arm_goal_spd_m5 ;                 // motor5 goal speed for Arm
   int arm_goal_spd_m6 ;                 // motor6 goal speed for Arm
   
-  byte tm1638_keys  ;               // push button inputs from TM1638
+  byte tm1638_keys  ;                   // push button inputs from TM1638
   
-  bool eStop ;                  // emergency stop flag
-  
-  /*unsigned int mc1_batt ; //= 250; //0; <-- Moved to MotorSuite.h
-  unsigned int mc2_batt ; //= 250; //0;
-  unsigned int mc3_batt ; //= 250; //Checking battery for MC3, specifically needed for the arm
-  
-  bool batteryOK ; //= true;               // battery status is OK flag*/
+  bool eStop ;                          // emergency stop flag
   
   // delete if not being used....
   //bool megaSpeed ; //= 0;
@@ -125,15 +117,6 @@ class JoystickSuite{
   bool b1, b2, b3, b4;  // Button1, Button2, Button3, Button4
   bool st, se;          // Start, Select
   // TODO: add analogs
-
-  /*// *********************
-  // Thing Struct           <--- ThingSuite.h
-  // ***********************
-  
-  bool thing_on =false; // getThing checks this value
-  int direction; //  accessed by setThingSpeed & checked by getThing
-  int motorNum; // accessed by getThing
-  int duration;*/ 
   
   // ***************
   // Thing Variables        
@@ -153,48 +136,6 @@ class JoystickSuite{
   }DRIVE_PARAMS;
 
   DRIVE_PARAMS drive_parameters[ROVER_SPEED_SETTINGS];  // LUT for driving parameters, this is an array containing instances of the struct
-  
-  /*// ************************
-  // DANGER                    <-- Moved to DangerSuite.h
-  // ************************
-  
-  bool dangerOverride ; //                        // Danger Override
-  int dangerCounter ; //
-  bool dangerFront ; //                           // Rover Danger Variables
-  bool dangerBack ; //                            // Rover Danger Variables
-  bool FrontRight ; //
-  bool FrontLeft ; //
-  bool BackRight ; //
-  bool BackLeft ; //
-  
-  int buttonStateFront_R ; //
-  int buttonStateFront_L ; //
-  int buttonStateBack_R ; //
-  int buttonStateBack_L ; //
-  
-  // Arm Danger Variables
-  
-  bool dangerM1 ; //
-  bool dangerM2 ; //
-  bool dangerM3 ; //
-  bool dangerM4 ; //
-  bool dangerM5 ; //
-  bool dangerM6 ; //   
-  
-  // Arm Motor Current Theshold
-  
-  int M1_thresh ; //
-  int M2_thresh ; //
-  int M3_thresh ; //
-  int M4_thresh ; //
-  int M5_thresh ; //
-  int M6_thresh ; //              undertermined values; requires testing
-  
-  // Pin Locations for Rover <-- Moved to DangerSuite.h
-  int BUTTON_PIN_FRONT_R ; // 
-  int BUTTON_PIN_FRONT_L ; //
-  int BUTTON_PIN_BACK_R ; //
-  int BUTTON_PIN_BACK_L ; //*/
 };
 #endif // JOYSTICKSUITE_H
 

@@ -22,54 +22,45 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
 
   XBee.begin(9600);
   
-  bool xbee_on = false;
-  int xbee_counter = 0;
-  long lastTimeJSMessageRecieved;
+  xbee_on = false;
+  xbee_counter = 0;
+  lastTimeJSMessageRecieved;
 
   // ************************
   // GLOBAL VARIABLES
   // ************************
   
-  //HardCode the Mode of Rover
-  mode = MODE_ROVER;
-  
-  byte drive_mode = SLOW;    // indicates which driving profile is currently used
-  bool hillMode = true;      // maintain velocity of 0 (ie: brake if not driving)
+  drive_mode = SLOW;    // indicates which driving profile is currently used
+  hillMode = true;      // maintain velocity of 0 (ie: brake if not driving)
   
   
-  unsigned long last_loop_time = 0;
+  last_loop_time = 0;
 
-  unsigned long joystick_command_count = 0;         // count of commands from joystick
+  joystick_command_count = 0;         // count of commands from joystick
   
   //COMMAND_FROM_THING_TO_MC CMDS_TO_MC;
   
   // current and goal speeds for each side
-  int rover_cur_spd_lt  = 0;               // current left motor speed for Rover
-  int rover_cur_spd_rt  = 0;               // current right motor speed for Rover
-  int rover_goal_spd_lt = 0;               // left motor goal speed for Rover
-  int rover_goal_spd_rt = 0;               // right motor goal speed for Rover 
-  int arm_cur_spd_m1  = 0;                 // current motor1 speed for Arm
-  int arm_cur_spd_m2  = 0;                 // current motor2 speed for Arm
-  int arm_cur_spd_m3  = 0;                 // current motor3 speed for Arm
-  int arm_cur_spd_m4  = 0;                 // current motor4 speed for Arm
-  int arm_cur_spd_m5  = 0;                 // current motor5 speed for Arm
-  int arm_cur_spd_m6  = 0;                 // current motor6 speed for Arm
-  int arm_goal_spd_m1 = 0;                 // motor1 goal speed for Arm
-  int arm_goal_spd_m2 = 0;                 // motor2 goal speed for Arm
-  int arm_goal_spd_m3 = 0;                 // motor3 goal speed for Arm
-  int arm_goal_spd_m4 = 0;                 // motor4 goal speed for Arm
-  int arm_goal_spd_m5 = 0;                 // motor5 goal speed for Arm
-  int arm_goal_spd_m6 = 0;                 // motor6 goal speed for Arm
+  rover_cur_spd_lt  = 0;               // current left motor speed for Rover
+  rover_cur_spd_rt  = 0;               // current right motor speed for Rover
+  rover_goal_spd_lt = 0;               // left motor goal speed for Rover
+  rover_goal_spd_rt = 0;               // right motor goal speed for Rover 
+  arm_cur_spd_m1  = 0;                 // current motor1 speed for Arm
+  arm_cur_spd_m2  = 0;                 // current motor2 speed for Arm
+  arm_cur_spd_m3  = 0;                 // current motor3 speed for Arm
+  arm_cur_spd_m4  = 0;                 // current motor4 speed for Arm
+  arm_cur_spd_m5  = 0;                 // current motor5 speed for Arm
+  arm_cur_spd_m6  = 0;                 // current motor6 speed for Arm
+  arm_goal_spd_m1 = 0;                 // motor1 goal speed for Arm
+  arm_goal_spd_m2 = 0;                 // motor2 goal speed for Arm
+  arm_goal_spd_m3 = 0;                 // motor3 goal speed for Arm
+  arm_goal_spd_m4 = 0;                 // motor4 goal speed for Arm
+  arm_goal_spd_m5 = 0;                 // motor5 goal speed for Arm
+  arm_goal_spd_m6 = 0;                 // motor6 goal speed for Arm
   
-  byte tm1638_keys  = 0;               // push button inputs from TM1638
+  tm1638_keys  = 0;                    // push button inputs from TM1638
   
-  bool eStop = false;                  // emergency stop flag
-  
-  /*unsigned int mc1_batt = 250; //0; <-- Moved to MotorSuite.h
-  unsigned int mc2_batt = 250; //0;
-  unsigned int mc3_batt = 250; //Checking battery for MC3, specifically needed for the arm
-  
-  bool batteryOK = true;               // battery status is OK flag*/
+  eStop = false;                       // emergency stop flag
   
   // delete if not being used....
   // bool megaSpeed = 0;
@@ -108,57 +99,9 @@ JoystickSuite::JoystickSuite(int rx,int tx):XBee(rx,tx){
   drive_parameters[ARM].ramp       = ARM_RAMP_RATE;
   drive_parameters[ARM].thr        = ARM_THR;
   
-  /*// ************************
-  //    DANGER                //WHERE IS THIS USED? <-- Moved to DangerSuite.h
-  // ************************
-  
-  bool dangerOverride = false;                        // Danger Override
-  int dangerCounter = 0;
-  bool dangerFront = false;                           // Rover Danger Variables
-  bool dangerBack = false;                            // Rover Danger Variables
-  bool FrontRight = false;
-  bool FrontLeft = false;
-  bool BackRight = false;
-  bool BackLeft = false;
-  
-  int buttonStateFront_R = 0;
-  int buttonStateFront_L = 0;
-  int buttonStateBack_R = 0;
-  int buttonStateBack_L = 0;
-  
-  // Arm Danger Variables
-  
-  bool dangerM1 = false;
-  bool dangerM2 = false;
-  bool dangerM3 = false;
-  bool dangerM4 = false;
-  bool dangerM5 = false;
-  bool dangerM6 = false;   
-  
-  // Arm Motor Current Theshold
-  
-  int M1_thresh = 1;
-  int M2_thresh = 2;
-  int M3_thresh = 3;
-  int M4_thresh = 4;
-  int M5_thresh = 5;
-  int M6_thresh = 6;              // undertermined values; requires testing
-  
-  // Pin Locations for Rover
-  int BUTTON_PIN_FRONT_R = 43;  
-  int BUTTON_PIN_FRONT_L = 41;
-  int BUTTON_PIN_BACK_R = 47;
-  int BUTTON_PIN_BACK_L = 45;*/
-
   // ************************
   //    Setup
   // ************************
-  
-  /*//Initalizing Bumper Pins <-- Moved to DangerSuite()
-  pinMode(BUTTON_PIN_FRONT_R, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_FRONT_L, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_BACK_R, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_BACK_L, INPUT_PULLUP);*/
 
   //get the time
   lastTimeJSMessageRecieved = millis();

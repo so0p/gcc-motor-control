@@ -39,12 +39,12 @@ void loop() {
     // Get Danger
     //***********
     // Detects Bumper Collisions and Checks Currents
-    Serial.println(F("DANGER READ BEFORE"));
+    /* TEMP Serial.println(F("DANGER READ BEFORE"));
     Danger_1.buttonStateFront_R = digitalRead(Danger_1.BUTTON_PIN_FRONT_R);
     Serial.println(Danger_1.buttonStateFront_R);
     Danger_1.buttonStateBack_R = digitalRead(Danger_1.BUTTON_PIN_BACK_R);
     Danger_1.buttonStateFront_L = digitalRead(Danger_1.BUTTON_PIN_FRONT_L);
-    Danger_1.buttonStateBack_L = digitalRead(Danger_1.BUTTON_PIN_BACK_L);
+    Danger_1.buttonStateBack_L = digitalRead(Danger_1.BUTTON_PIN_BACK_L);*/
           
     Danger_1.getDanger(Joystick_1);
 
@@ -82,16 +82,16 @@ void loop() {
     Motors_1.driveMotors(roboclaw1,roboclaw2,Joystick_1);
 
     // update the display status
-    //TEMP refresh_tm1638();
+    refresh_tm1638(tm1638,Joystick_1,Motors_1);
 
     // update values of motor controller
     //getStatus();
 
     // send information up to web client
-    //sendTelemetry();
+    //TODO? sendTelemetry();
 
     // check if arduino is alive
-    //ping();
+    //TODO? ping();
   
     // TODO: get MC battery levels. If 0, MC is not responding (ie: error)
     //get_roboclaw_status();
@@ -103,6 +103,4 @@ void loop() {
   else {
     delay(LOOP_PERIOD_MS / 10);
   }
-  
 } // loop()
-

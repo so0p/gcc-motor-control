@@ -8,7 +8,6 @@ class MotorSuite{
   public:
 
   MotorSuite();
-  ~MotorSuite();
   void driveMotors(RoboClaw& roboclaw1,RoboClaw& roboclaw2,JoystickSuite& joystick);
   void get_battery_status(RoboClaw& roboclaw1,RoboClaw& roboclaw2);
 

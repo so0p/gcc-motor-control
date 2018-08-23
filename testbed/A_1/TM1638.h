@@ -58,7 +58,7 @@ class TM1638 : public TM16XX
 
     /** Returns the pressed buttons as a bit set (left to right). */
     virtual byte getButtons();
-
+    
   protected:
     virtual void sendChar(byte pos, byte data, boolean dot);
     void setDisplayToDecNumberAt(unsigned long number, byte dots, byte startingPos,
