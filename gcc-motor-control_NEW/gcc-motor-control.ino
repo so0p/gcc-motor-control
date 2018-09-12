@@ -9,25 +9,26 @@ and the serial monitor.
 
 Hardware Hookup:
   The XBee Shield makes all of the connections you'll need
-  between Arduino and XBee. If you have the shield make sure
-  the SWITCH IS IN THE "DLINE" POSITION. That will connect
+  between Arduino and XBee. If you have the shield make
+  sure the SWITCH IS IN THE "DLINE" POSITION. That will connect
   the XBee's DOUT and DIN pins to Arduino pins 2 and 3.
 
 *****************************************************************/
 
-// *********
-// LIBRARIES
-// *********
+// **************************************************************
+//     LIBRARIES
+// **************************************************************
 
-#include <avr/pgmspace.h>
-#include "MemoryFree.h" // Used to debug
-#include "RoboClaw.h"
-#include "JoystickSuite.h" // incorporates several functions into a single structure
-#include "DangerSuite.h"
-#include "ThingSuite.h"
-#include "MotorSuite.h"
-#include "HelperFunctions.h" // includes setSpeed
-#include "TM1638.h" // for TM1638 display unit
+//Includes required to use Roboclaw library
+#include "Roboclaw/RoboClaw.h"
+#include "JoystickSuite/JoystickSuite.h" // incorporates several functions into a single structure
+#include "DangerSuite/DangerSuite.h"
+#include "ThingSuite/ThingSuite.h"
+#include "MotorSuite/MotorSuite.h"
+#include "HelperFunctions/HelperFunctions.h" // includes setSpeed
+
+// for TM1638 display unit
+#include "TM1638/TM1638.h"
 
 //#define cmdDelay 150 // WHAT IS THIS USED FOR?
 
@@ -47,16 +48,16 @@ MotorSuite Motors_1;
 // ROBOCLAW
 // ********
 
-// Setup communcaitions with roboclaw. Use pins 10 and 11 with 10ms timeout
-// For Rover, claw1 is left, claw2 is right
-// For Arm,
+//Setup communcaitions with roboclaw. Use pins 10 and 11 with 10ms timeout
+//For Rover, claw1 is L, claw2 is right
+//For Arm,
 
 // .. and Hardware Serial (on the Arduino MEGA) for RoboClaw control
 #include <HardwareSerial.h>
 
 RoboClaw roboclaw1(&Serial2,10000);
 RoboClaw roboclaw2(&Serial3,10000); // 2
-// RoboClaw roboclaw3(&Serial1, 10000);
+//RoboClaw roboclaw3(&Serial1, 10000);
 
 // *******************
 // setup TM1638 module

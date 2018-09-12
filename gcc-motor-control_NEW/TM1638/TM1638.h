@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#include "WProgram.h"
 #endif
 
-#include "TM16XX.h"
-#include "TM16XXFonts.h"
+#include "../TM16XX/TM16XX.h"
+#include "../TM16XX/TM16XXFonts.h"
 
 #define TM1638_COLOR_NONE   0
 #define TM1638_COLOR_RED    1

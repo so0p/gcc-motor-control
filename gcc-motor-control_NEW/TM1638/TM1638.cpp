@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#include "WProgram.h"
 #endif
 
-#include "TM1638.h"
+#include "./TM1638.h"
 #include "string.h"
 
 TM1638::TM1638(byte dataPin, byte clockPin, byte strobePin, boolean activateDisplay, byte intensity)

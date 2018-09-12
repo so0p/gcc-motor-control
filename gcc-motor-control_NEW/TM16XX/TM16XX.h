@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#include "WProgram.h"
 #endif
 
-#include "TM16XXFonts.h"
+#include "./TM16XXFonts.h"
 
 class TM16XX
 {

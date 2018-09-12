@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#include "WProgram.h"
 #endif
 
-#include "TM16XX.h"
+#include "./TM16XX.h"
 #include "string.h"
 
 TM16XX::TM16XX(byte dataPin, byte clockPin, byte strobePin, byte displays, boolean activateDisplay,
